@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package v1;
+
+import "v1/user.proto";
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+service Account {
+  rpc CreateUser (CreateUserRequest) returns (User);
+  rpc DeleteUser (DeleteUserRequest) returns (User);
+  rpc GetUser (GetUserRequest) returns (User);
+  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse);
+  rpc UpdateUser (UpdateUserRequest) returns (User);
+}

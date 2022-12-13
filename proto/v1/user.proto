@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+import "v1/profile.proto";
+import "v1/client.proto";
+import "v1/client_approval.proto";
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+message User {
+  string id = 1;
+  repeated Client clients = 2;
+  repeated ClientApproval client_approvals = 3;
+  string email = 4;
+  bool email_verified = 5;
+  string password = 6;
+  string phone_number = 7;
+  bool phone_number_verified = 8;
+  Profile profile = 9;
+  string username = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+}
+
+message CreateUserRequest {
+  string email = 1;
+  string password = 2;
+  string username = 3;
+}
+
+message DeleteUserRequest {
+  optional string id = 1;
+  optional string email = 2;
+  optional string username = 3;
+}
+
+message GetUserRequest {
+  optional string id = 1;
+  optional string email = 2;
+  optional string username = 3;
+}
+
+message ListUsersRequest {}
+
+message ListUsersResponse {
+  repeated User users = 1;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  optional string email = 2;
+  optional string password = 3;
+  optional string phone_number = 4;
+  optional string username = 5;
+}

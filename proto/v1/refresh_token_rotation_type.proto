@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package v1;
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+enum RefreshTokenRotationType {
+  ROTATE = 0;
+  STATIC = 1;
+}

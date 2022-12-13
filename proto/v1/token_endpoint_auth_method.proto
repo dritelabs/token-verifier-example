@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package v1;
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+enum TokenEndpointAuthMethod {
+  CLIENT_SECRET_BASIC = 0;
+  NONE = 1;
+  PRIVATE_KEY_JWT = 2;
+}

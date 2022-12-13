@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+message Scope {
+  string id = 1;
+  string display_name = 2;
+  string description = 3;
+  string name = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
