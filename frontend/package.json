@@ -5,9 +5,16 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "protoc": "scripts/build-proto.sh"
+  },
+  "dependencies": {
+    "google-protobuf": "^3.21.2"
   },
   "devDependencies": {
+    "@types/google-protobuf": "^3.15.6",
+    "grpc_tools_node_protoc_ts": "^5.3.2",
+    "grpc-tools": "1.11.2",
     "nuxt": "3.0.0"
   }
 }

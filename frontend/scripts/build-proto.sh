@@ -2,7 +2,7 @@
 
 OUT_DIR="./server/proto"
 TS_OUT_DIR="./server/proto"
-IN_DIR="../protos"
+IN_DIR="../protobuf"
 PROTOC="$(npm bin)/grpc_tools_node_protoc"
 PROTOC_GEN_TS_PATH="$(npm bin)/protoc-gen-ts"
 PROTOC_GEN_GRPC_PATH="$(npm bin)/grpc_tools_node_protoc_plugin"
@@ -14,4 +14,4 @@ $PROTOC \
     --js_out=import_style=commonjs:$OUT_DIR \
     --grpc_out=grpc_js:$OUT_DIR \
     --ts_out=grpc_js:$TS_OUT_DIR \
-    "$IN_DIR"/*.proto
+    "$IN_DIR"/v1/*.proto
