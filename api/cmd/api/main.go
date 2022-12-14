@@ -34,6 +34,8 @@ func main() {
 		log.Fatal().Err(err).Msg("Failed to migrate database")
 	}
 
+	// database.Generate(db)
+
 	grpcLogger := grpc.UnaryInterceptor(logger.GrpcLogger)
 	grpcServer := grpc.NewServer(grpcLogger)
 	accountServer := server.New(&server.AccountServerConfig{

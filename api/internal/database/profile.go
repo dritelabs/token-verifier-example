@@ -1,33 +1,28 @@
 package database
 
 import (
+	"database/sql"
+	"time"
+
 	"github.com/gofrs/uuid"
+	"gorm.io/datatypes"
 	"gorm.io/gorm"
 )
 
 type Profile struct {
 	gorm.Model
-	ID uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primarykey"`
+	ID         uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primarykey"`
+	UserID     uuid.UUID
+	BirthDate  time.Time
+	FirstName  sql.NullString
+	Gender     sql.NullString
+	Locale     sql.NullString
+	LastName   sql.NullString
+	MiddleName sql.NullString
+	Nickname   sql.NullString
+	Profile    datatypes.URL
+	Picture    datatypes.URL
+	User       User
+	Website    datatypes.URL
+	ZoneInfo   sql.NullString
 }
-
-// func (p *User) ToPostResponse() *pb.Post {
-// 	return &pb.Post{
-// 		Id:          p.ID.String(),
-// 		Title:       p.Title,
-// 		Description: p.Description,
-// 		CreatedAt:   timestamppb.New(p.CreatedAt),
-// 		UpdatedAt:   timestamppb.New(p.CreatedAt),
-// 	}
-// }
-
-// func ToListPostsResponse(posts []Post) *pb.ListPostsResponse {
-// 	var res []*pb.Post
-
-// 	for _, p := range posts {
-// 		res = append(res, p.ToPostResponse())
-// 	}
-
-// 	return &pb.ListPostsResponse{
-// 		Posts: res,
-// 	}
-// }
