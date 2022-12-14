@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/dritelabs/accounts/internal/database/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gen"
 	"gorm.io/gorm"
@@ -13,7 +14,14 @@ func New(dsn string) (*gorm.DB, error) {
 }
 
 func AutoMigrate(db *gorm.DB) error {
-	return db.AutoMigrate(&Address{}, &Approval{}, &Client{}, &Jwk{}, &Profile{}, &User{})
+	return db.AutoMigrate(
+		&models.Address{},
+		&models.Approval{},
+		&models.Client{},
+		&models.Jwk{},
+		&models.Profile{},
+		&models.User{},
+	)
 }
 
 // Dynamic SQL
@@ -24,26 +32,29 @@ type Querier interface {
 
 func Generate(db *gorm.DB) {
 	g := gen.NewGenerator(gen.Config{
-		OutPath:       "internal/query",
+		OutPath:       "internal/database/query",
 		Mode:          gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface, // generate mode
 		FieldNullable: true,
 	})
 
-	var models []interface{}
+	var m []interface{}
 
-	models = append(models, Address{})
-	models = append(models, Approval{})
-	models = append(models, Client{})
-	models = append(models, User{})
+	m = append(m, models.Address{})
+	m = append(m, models.Approval{})
+	m = append(m, models.Client{})
+	m = append(m, models.Jwk{})
+	m = append(m, models.Profile{})
+	m = append(m, models.Scope{})
+	m = append(m, models.User{})
 
 	// gormdb, _ := gorm.Open(mysql.Open("root:@(127.0.0.1:3306)/demo?charset=utf8mb4&parseTime=True&loc=Local"))
 	g.UseDB(db) // reuse your gorm db
 
 	// Generate basic type-safe DAO API for struct `model.User` following conventions
-	g.ApplyBasic(models...)
+	g.ApplyBasic(m...)
 
 	// Generate Type Safe API with Dynamic SQL defined on Querier interface for `model.User` and `model.Company`
-	g.ApplyInterface(func(Querier) {}, models...)
+	g.ApplyInterface(func(Querier) {}, m...)
 
 	// Generate the code
 	g.Execute()
