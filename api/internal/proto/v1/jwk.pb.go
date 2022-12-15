@@ -22,7 +22,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type JWK struct {
+type Jwk struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -35,8 +35,8 @@ type JWK struct {
 	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 }
 
-func (x *JWK) Reset() {
-	*x = JWK{}
+func (x *Jwk) Reset() {
+	*x = Jwk{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_v1_jwk_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -44,13 +44,13 @@ func (x *JWK) Reset() {
 	}
 }
 
-func (x *JWK) String() string {
+func (x *Jwk) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*JWK) ProtoMessage() {}
+func (*Jwk) ProtoMessage() {}
 
-func (x *JWK) ProtoReflect() protoreflect.Message {
+func (x *Jwk) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_jwk_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -62,51 +62,89 @@ func (x *JWK) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use JWK.ProtoReflect.Descriptor instead.
-func (*JWK) Descriptor() ([]byte, []int) {
+// Deprecated: Use Jwk.ProtoReflect.Descriptor instead.
+func (*Jwk) Descriptor() ([]byte, []int) {
 	return file_v1_jwk_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *JWK) GetId() string {
+func (x *Jwk) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *JWK) GetClientId() string {
+func (x *Jwk) GetClientId() string {
 	if x != nil {
 		return x.ClientId
 	}
 	return ""
 }
 
-func (x *JWK) GetJwk() *anypb.Any {
+func (x *Jwk) GetJwk() *anypb.Any {
 	if x != nil {
 		return x.Jwk
 	}
 	return nil
 }
 
-func (x *JWK) GetScopes() []string {
+func (x *Jwk) GetScopes() []string {
 	if x != nil {
 		return x.Scopes
 	}
 	return nil
 }
 
-func (x *JWK) GetCreatedAt() *timestamppb.Timestamp {
+func (x *Jwk) GetCreatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreatedAt
 	}
 	return nil
 }
 
-func (x *JWK) GetUpdatedAt() *timestamppb.Timestamp {
+func (x *Jwk) GetUpdatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdatedAt
 	}
 	return nil
+}
+
+type GetJwksRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *GetJwksRequest) Reset() {
+	*x = GetJwksRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_jwk_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetJwksRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetJwksRequest) ProtoMessage() {}
+
+func (x *GetJwksRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_jwk_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetJwksRequest.ProtoReflect.Descriptor instead.
+func (*GetJwksRequest) Descriptor() ([]byte, []int) {
+	return file_v1_jwk_proto_rawDescGZIP(), []int{1}
 }
 
 var File_v1_jwk_proto protoreflect.FileDescriptor
@@ -117,7 +155,7 @@ var file_v1_jwk_proto_rawDesc = []byte{
 	0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x62, 0x75, 0x66, 0x2f, 0x61, 0x6e, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xe8,
-	0x01, 0x0a, 0x03, 0x4a, 0x57, 0x4b, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x01, 0x0a, 0x03, 0x4a, 0x77, 0x6b, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74,
 	0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6c, 0x69, 0x65, 0x6e,
 	0x74, 0x49, 0x64, 0x12, 0x26, 0x0a, 0x03, 0x6a, 0x77, 0x6b, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b,
@@ -131,10 +169,11 @@ var file_v1_jwk_proto_rawDesc = []byte{
 	0x0a, 0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x06, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09,
-	0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x42, 0x22, 0x5a, 0x20, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x72, 0x69, 0x74, 0x65, 0x6c, 0x61, 0x62,
-	0x73, 0x2f, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x73, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x22, 0x10, 0x0a, 0x0e, 0x47, 0x65, 0x74,
+	0x4a, 0x77, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x22, 0x5a, 0x20, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x72, 0x69, 0x74, 0x65, 0x6c,
+	0x61, 0x62, 0x73, 0x2f, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x73, 0x2f, 0x70, 0x62, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -149,16 +188,17 @@ func file_v1_jwk_proto_rawDescGZIP() []byte {
 	return file_v1_jwk_proto_rawDescData
 }
 
-var file_v1_jwk_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_v1_jwk_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_v1_jwk_proto_goTypes = []interface{}{
-	(*JWK)(nil),                   // 0: v1.JWK
-	(*anypb.Any)(nil),             // 1: google.protobuf.Any
-	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(*Jwk)(nil),                   // 0: v1.Jwk
+	(*GetJwksRequest)(nil),        // 1: v1.GetJwksRequest
+	(*anypb.Any)(nil),             // 2: google.protobuf.Any
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_v1_jwk_proto_depIdxs = []int32{
-	1, // 0: v1.JWK.jwk:type_name -> google.protobuf.Any
-	2, // 1: v1.JWK.created_at:type_name -> google.protobuf.Timestamp
-	2, // 2: v1.JWK.updated_at:type_name -> google.protobuf.Timestamp
+	2, // 0: v1.Jwk.jwk:type_name -> google.protobuf.Any
+	3, // 1: v1.Jwk.created_at:type_name -> google.protobuf.Timestamp
+	3, // 2: v1.Jwk.updated_at:type_name -> google.protobuf.Timestamp
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
@@ -173,7 +213,19 @@ func file_v1_jwk_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_v1_jwk_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*JWK); i {
+			switch v := v.(*Jwk); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_jwk_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetJwksRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -191,7 +243,7 @@ func file_v1_jwk_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_v1_jwk_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

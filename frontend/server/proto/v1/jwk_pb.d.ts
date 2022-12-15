@@ -8,42 +8,42 @@ import * as jspb from "google-protobuf";
 import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
 
-export class JWK extends jspb.Message { 
+export class Jwk extends jspb.Message { 
     getId(): string;
-    setId(value: string): JWK;
+    setId(value: string): Jwk;
     getClientId(): string;
-    setClientId(value: string): JWK;
+    setClientId(value: string): Jwk;
 
     hasJwk(): boolean;
     clearJwk(): void;
     getJwk(): google_protobuf_any_pb.Any | undefined;
-    setJwk(value?: google_protobuf_any_pb.Any): JWK;
+    setJwk(value?: google_protobuf_any_pb.Any): Jwk;
     clearScopesList(): void;
     getScopesList(): Array<string>;
-    setScopesList(value: Array<string>): JWK;
+    setScopesList(value: Array<string>): Jwk;
     addScopes(value: string, index?: number): string;
 
     hasCreatedAt(): boolean;
     clearCreatedAt(): void;
     getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): JWK;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Jwk;
 
     hasUpdatedAt(): boolean;
     clearUpdatedAt(): void;
     getUpdatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setUpdatedAt(value?: google_protobuf_timestamp_pb.Timestamp): JWK;
+    setUpdatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Jwk;
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): JWK.AsObject;
-    static toObject(includeInstance: boolean, msg: JWK): JWK.AsObject;
+    toObject(includeInstance?: boolean): Jwk.AsObject;
+    static toObject(includeInstance: boolean, msg: Jwk): Jwk.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: JWK, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): JWK;
-    static deserializeBinaryFromReader(message: JWK, reader: jspb.BinaryReader): JWK;
+    static serializeBinaryToWriter(message: Jwk, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Jwk;
+    static deserializeBinaryFromReader(message: Jwk, reader: jspb.BinaryReader): Jwk;
 }
 
-export namespace JWK {
+export namespace Jwk {
     export type AsObject = {
         id: string,
         clientId: string,
@@ -51,5 +51,22 @@ export namespace JWK {
         scopesList: Array<string>,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         updatedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
+export class GetJwksRequest extends jspb.Message { 
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetJwksRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetJwksRequest): GetJwksRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetJwksRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetJwksRequest;
+    static deserializeBinaryFromReader(message: GetJwksRequest, reader: jspb.BinaryReader): GetJwksRequest;
+}
+
+export namespace GetJwksRequest {
+    export type AsObject = {
     }
 }

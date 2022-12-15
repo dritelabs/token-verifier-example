@@ -15,5 +15,9 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+var google_protobuf_any_pb = require('google-protobuf/google/protobuf/any_pb.js');
+goog.object.extend(proto, google_protobuf_any_pb);
 var v1_user_pb = require('../v1/user_pb.js');
 goog.object.extend(proto, v1_user_pb);
+var v1_jwk_pb = require('../v1/jwk_pb.js');
+goog.object.extend(proto, v1_jwk_pb);

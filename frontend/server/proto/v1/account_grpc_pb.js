@@ -2,7 +2,20 @@
 
 'use strict';
 var grpc = require('@grpc/grpc-js');
+var google_protobuf_any_pb = require('google-protobuf/google/protobuf/any_pb.js');
 var v1_user_pb = require('../v1/user_pb.js');
+var v1_jwk_pb = require('../v1/jwk_pb.js');
+
+function serialize_google_protobuf_Any(arg) {
+  if (!(arg instanceof google_protobuf_any_pb.Any)) {
+    throw new Error('Expected argument of type google.protobuf.Any');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_google_protobuf_Any(buffer_arg) {
+  return google_protobuf_any_pb.Any.deserializeBinary(new Uint8Array(buffer_arg));
+}
 
 function serialize_v1_CreateUserRequest(arg) {
   if (!(arg instanceof v1_user_pb.CreateUserRequest)) {
@@ -24,6 +37,17 @@ function serialize_v1_DeleteUserRequest(arg) {
 
 function deserialize_v1_DeleteUserRequest(buffer_arg) {
   return v1_user_pb.DeleteUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_v1_GetJwksRequest(arg) {
+  if (!(arg instanceof v1_jwk_pb.GetJwksRequest)) {
+    throw new Error('Expected argument of type v1.GetJwksRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_v1_GetJwksRequest(buffer_arg) {
+  return v1_jwk_pb.GetJwksRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_v1_GetUserRequest(arg) {
@@ -137,6 +161,17 @@ var AccountService = exports.AccountService = {
     requestDeserialize: deserialize_v1_UpdateUserRequest,
     responseSerialize: serialize_v1_User,
     responseDeserialize: deserialize_v1_User,
+  },
+  getJwks: {
+    path: '/v1.Account/GetJwks',
+    requestStream: false,
+    responseStream: false,
+    requestType: v1_jwk_pb.GetJwksRequest,
+    responseType: google_protobuf_any_pb.Any,
+    requestSerialize: serialize_v1_GetJwksRequest,
+    requestDeserialize: deserialize_v1_GetJwksRequest,
+    responseSerialize: serialize_google_protobuf_Any,
+    responseDeserialize: deserialize_google_protobuf_Any,
   },
 };
 

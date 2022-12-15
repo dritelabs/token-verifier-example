@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	anypb "google.golang.org/protobuf/types/known/anypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -27,6 +28,7 @@ type AccountClient interface {
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*User, error)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*User, error)
+	GetJwks(ctx context.Context, in *GetJwksRequest, opts ...grpc.CallOption) (*anypb.Any, error)
 }
 
 type accountClient struct {
@@ -82,6 +84,15 @@ func (c *accountClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, o
 	return out, nil
 }
 
+func (c *accountClient) GetJwks(ctx context.Context, in *GetJwksRequest, opts ...grpc.CallOption) (*anypb.Any, error) {
+	out := new(anypb.Any)
+	err := c.cc.Invoke(ctx, "/v1.Account/GetJwks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AccountServer is the server API for Account service.
 // All implementations must embed UnimplementedAccountServer
 // for forward compatibility
@@ -91,6 +102,7 @@ type AccountServer interface {
 	GetUser(context.Context, *GetUserRequest) (*User, error)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*User, error)
+	GetJwks(context.Context, *GetJwksRequest) (*anypb.Any, error)
 	mustEmbedUnimplementedAccountServer()
 }
 
@@ -112,6 +124,9 @@ func (UnimplementedAccountServer) ListUsers(context.Context, *ListUsersRequest) 
 }
 func (UnimplementedAccountServer) UpdateUser(context.Context, *UpdateUserRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (UnimplementedAccountServer) GetJwks(context.Context, *GetJwksRequest) (*anypb.Any, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJwks not implemented")
 }
 func (UnimplementedAccountServer) mustEmbedUnimplementedAccountServer() {}
 
@@ -216,6 +231,24 @@ func _Account_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Account_GetJwks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetJwksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).GetJwks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.Account/GetJwks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).GetJwks(ctx, req.(*GetJwksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Account_ServiceDesc is the grpc.ServiceDesc for Account service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +275,10 @@ var Account_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateUser",
 			Handler:    _Account_UpdateUser_Handler,
+		},
+		{
+			MethodName: "GetJwks",
+			Handler:    _Account_GetJwks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

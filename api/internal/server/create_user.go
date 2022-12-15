@@ -28,7 +28,7 @@ func (s *AccountServer) CreateUser(ctx context.Context, in *pb.CreateUserRequest
 		Profile:  &models.Profile{},
 	}
 
-	err = query.User.WithContext(ctx).Create(&u) // pass pointer of data to Create
+	err = query.User.WithContext(ctx).Create(&u)
 
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to create user: %s", err)

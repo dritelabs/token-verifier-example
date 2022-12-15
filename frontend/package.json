@@ -9,6 +9,7 @@
     "protoc": "scripts/build-proto.sh"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.7.3",
     "google-protobuf": "^3.21.2"
   },
   "devDependencies": {

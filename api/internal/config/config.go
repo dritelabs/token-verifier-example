@@ -1,6 +1,11 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"fmt"
+	"os"
+
+	"github.com/spf13/viper"
+)
 
 type Config struct {
 	DBSource          string `mapstructure:"DB_SOURCE"`
@@ -23,4 +28,14 @@ func LoadConfig(path string) (config Config, err error) {
 	err = viper.Unmarshal(&config)
 
 	return
+}
+
+func LoadJwks() (string, error) {
+	bytes, err := os.ReadFile("configs/jwks.json")
+
+	if err != nil {
+		return "", fmt.Errorf("failed to read jwks %s", err)
+	}
+
+	return string(bytes), nil
 }

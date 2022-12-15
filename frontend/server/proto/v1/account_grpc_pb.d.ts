@@ -6,7 +6,9 @@
 
 import * as grpc from "@grpc/grpc-js";
 import * as v1_account_pb from "../v1/account_pb";
+import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
 import * as v1_user_pb from "../v1/user_pb";
+import * as v1_jwk_pb from "../v1/jwk_pb";
 
 interface IAccountService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     createUser: IAccountService_ICreateUser;
@@ -14,6 +16,7 @@ interface IAccountService extends grpc.ServiceDefinition<grpc.UntypedServiceImpl
     getUser: IAccountService_IGetUser;
     listUsers: IAccountService_IListUsers;
     updateUser: IAccountService_IUpdateUser;
+    getJwks: IAccountService_IGetJwks;
 }
 
 interface IAccountService_ICreateUser extends grpc.MethodDefinition<v1_user_pb.CreateUserRequest, v1_user_pb.User> {
@@ -61,6 +64,15 @@ interface IAccountService_IUpdateUser extends grpc.MethodDefinition<v1_user_pb.U
     responseSerialize: grpc.serialize<v1_user_pb.User>;
     responseDeserialize: grpc.deserialize<v1_user_pb.User>;
 }
+interface IAccountService_IGetJwks extends grpc.MethodDefinition<v1_jwk_pb.GetJwksRequest, google_protobuf_any_pb.Any> {
+    path: "/v1.Account/GetJwks";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<v1_jwk_pb.GetJwksRequest>;
+    requestDeserialize: grpc.deserialize<v1_jwk_pb.GetJwksRequest>;
+    responseSerialize: grpc.serialize<google_protobuf_any_pb.Any>;
+    responseDeserialize: grpc.deserialize<google_protobuf_any_pb.Any>;
+}
 
 export const AccountService: IAccountService;
 
@@ -70,6 +82,7 @@ export interface IAccountServer extends grpc.UntypedServiceImplementation {
     getUser: grpc.handleUnaryCall<v1_user_pb.GetUserRequest, v1_user_pb.User>;
     listUsers: grpc.handleUnaryCall<v1_user_pb.ListUsersRequest, v1_user_pb.ListUsersResponse>;
     updateUser: grpc.handleUnaryCall<v1_user_pb.UpdateUserRequest, v1_user_pb.User>;
+    getJwks: grpc.handleUnaryCall<v1_jwk_pb.GetJwksRequest, google_protobuf_any_pb.Any>;
 }
 
 export interface IAccountClient {
@@ -88,6 +101,9 @@ export interface IAccountClient {
     updateUser(request: v1_user_pb.UpdateUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
     updateUser(request: v1_user_pb.UpdateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
     updateUser(request: v1_user_pb.UpdateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
+    getJwks(request: v1_jwk_pb.GetJwksRequest, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
+    getJwks(request: v1_jwk_pb.GetJwksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
+    getJwks(request: v1_jwk_pb.GetJwksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
 }
 
 export class AccountClient extends grpc.Client implements IAccountClient {
@@ -107,4 +123,7 @@ export class AccountClient extends grpc.Client implements IAccountClient {
     public updateUser(request: v1_user_pb.UpdateUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
     public updateUser(request: v1_user_pb.UpdateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
     public updateUser(request: v1_user_pb.UpdateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
+    public getJwks(request: v1_jwk_pb.GetJwksRequest, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
+    public getJwks(request: v1_jwk_pb.GetJwksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
+    public getJwks(request: v1_jwk_pb.GetJwksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
 }

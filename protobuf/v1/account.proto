@@ -2,7 +2,9 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/any.proto";
 import "v1/user.proto";
+import "v1/jwk.proto";
 
 option go_package = "github.com/dritelabs/accounts/pb";
 
@@ -12,4 +14,5 @@ service Account {
   rpc GetUser (GetUserRequest) returns (User);
   rpc ListUsers (ListUsersRequest) returns (ListUsersResponse);
   rpc UpdateUser (UpdateUserRequest) returns (User);
+  rpc GetJwks (GetJwksRequest) returns (google.protobuf.Any);
 }

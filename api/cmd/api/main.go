@@ -21,6 +21,11 @@ func main() {
 		log.Fatal().Err(err).Msg("Failed to load config")
 	}
 
+	jwks, err := config.LoadJwks()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to load jwks")
+	}
+
 	if conf.Environment == "development" {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	}
@@ -37,6 +42,7 @@ func main() {
 	accountServer := server.New(&server.AccountServerConfig{
 		Config: conf,
 		DB:     db,
+		Jwks:   jwks,
 	})
 
 	pb.RegisterAccountServer(grpcServer, accountServer)
