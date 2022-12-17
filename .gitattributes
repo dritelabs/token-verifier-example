@@ -1,1 +1,1 @@
-frontend/server/proto/**/*.js linguist-generated=true
+frontend/server/proto/v1/*.js linguist-generated=true
