@@ -2,10 +2,11 @@ package server
 
 import (
 	"context"
+	"errors"
 
 	"github.com/dritelabs/accounts/internal/crypto"
+	"github.com/dritelabs/accounts/internal/database"
 	"github.com/dritelabs/accounts/internal/database/models"
-	"github.com/dritelabs/accounts/internal/database/query"
 	pb "github.com/dritelabs/accounts/internal/proto/v1"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
@@ -18,7 +19,7 @@ func (s *AccountServer) CreateUser(ctx context.Context, in *pb.CreateUserRequest
 	hash, err := crypto.HashPassword(in.GetPassword())
 
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to hash password %s", err)
+		return nil, status.Errorf(codes.InvalidArgument, "failed to hash password %s", err)
 	}
 
 	u := models.User{
@@ -28,10 +29,12 @@ func (s *AccountServer) CreateUser(ctx context.Context, in *pb.CreateUserRequest
 		Profile:  &models.Profile{},
 	}
 
-	err = query.User.WithContext(ctx).Create(&u)
+	if result := s.DB.Create(&u); result.Error != nil {
+		if errors.As(result.Error, &database.ErrUniqueViolation) {
+			return nil, status.Errorf(codes.AlreadyExists, "user already exists: %s", result.Error)
+		}
 
-	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to create user: %s", err)
+		return nil, status.Errorf(codes.Internal, "failed to create user: %s", result.Error)
 	}
 
 	log.Info().Msgf("user with email %s was successfully created", in.GetEmail())

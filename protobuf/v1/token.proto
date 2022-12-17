@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package v1;
+
+import "v1/code_challenge_method.proto";
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+message CreateTokenRequest {
+  string client_id = 1;
+  string code_challenge = 2;
+  CodeChallengeMehtod code_challenge_method = 3;
+  string redirect_uri = 4;
+  string scope = 5;
+  string state = 6;
+}
+
+message CreateTokenResponse {
+  string redirect_uri = 1;
+}

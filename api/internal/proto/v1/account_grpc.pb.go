@@ -23,6 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AccountClient interface {
+	CreateAuthorization(ctx context.Context, in *CreateAuthorizationRequest, opts ...grpc.CallOption) (*CreateAuthorizationResponse, error)
+	CreateToken(ctx context.Context, in *CreateTokenRequest, opts ...grpc.CallOption) (*CreateTokenResponse, error)
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*User, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*User, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*User, error)
@@ -37,6 +39,24 @@ type accountClient struct {
 
 func NewAccountClient(cc grpc.ClientConnInterface) AccountClient {
 	return &accountClient{cc}
+}
+
+func (c *accountClient) CreateAuthorization(ctx context.Context, in *CreateAuthorizationRequest, opts ...grpc.CallOption) (*CreateAuthorizationResponse, error) {
+	out := new(CreateAuthorizationResponse)
+	err := c.cc.Invoke(ctx, "/v1.Account/CreateAuthorization", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountClient) CreateToken(ctx context.Context, in *CreateTokenRequest, opts ...grpc.CallOption) (*CreateTokenResponse, error) {
+	out := new(CreateTokenResponse)
+	err := c.cc.Invoke(ctx, "/v1.Account/CreateToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *accountClient) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*User, error) {
@@ -97,6 +117,8 @@ func (c *accountClient) GetJwks(ctx context.Context, in *GetJwksRequest, opts ..
 // All implementations must embed UnimplementedAccountServer
 // for forward compatibility
 type AccountServer interface {
+	CreateAuthorization(context.Context, *CreateAuthorizationRequest) (*CreateAuthorizationResponse, error)
+	CreateToken(context.Context, *CreateTokenRequest) (*CreateTokenResponse, error)
 	CreateUser(context.Context, *CreateUserRequest) (*User, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*User, error)
 	GetUser(context.Context, *GetUserRequest) (*User, error)
@@ -110,6 +132,12 @@ type AccountServer interface {
 type UnimplementedAccountServer struct {
 }
 
+func (UnimplementedAccountServer) CreateAuthorization(context.Context, *CreateAuthorizationRequest) (*CreateAuthorizationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAuthorization not implemented")
+}
+func (UnimplementedAccountServer) CreateToken(context.Context, *CreateTokenRequest) (*CreateTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateToken not implemented")
+}
 func (UnimplementedAccountServer) CreateUser(context.Context, *CreateUserRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
@@ -139,6 +167,42 @@ type UnsafeAccountServer interface {
 
 func RegisterAccountServer(s grpc.ServiceRegistrar, srv AccountServer) {
 	s.RegisterService(&Account_ServiceDesc, srv)
+}
+
+func _Account_CreateAuthorization_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAuthorizationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).CreateAuthorization(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.Account/CreateAuthorization",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).CreateAuthorization(ctx, req.(*CreateAuthorizationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Account_CreateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).CreateToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.Account/CreateToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).CreateToken(ctx, req.(*CreateTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Account_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -256,6 +320,14 @@ var Account_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "v1.Account",
 	HandlerType: (*AccountServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateAuthorization",
+			Handler:    _Account_CreateAuthorization_Handler,
+		},
+		{
+			MethodName: "CreateToken",
+			Handler:    _Account_CreateToken_Handler,
+		},
 		{
 			MethodName: "CreateUser",
 			Handler:    _Account_CreateUser_Handler,

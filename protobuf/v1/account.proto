@@ -3,12 +3,16 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/any.proto";
-import "v1/user.proto";
+import "v1/authorization.proto";
 import "v1/jwk.proto";
+import "v1/token.proto";
+import "v1/user.proto";
 
 option go_package = "github.com/dritelabs/accounts/pb";
 
 service Account {
+  rpc CreateAuthorization(CreateAuthorizationRequest) returns (CreateAuthorizationResponse);
+  rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse);
   rpc CreateUser (CreateUserRequest) returns (User);
   rpc DeleteUser (DeleteUserRequest) returns (User);
   rpc GetUser (GetUserRequest) returns (User);

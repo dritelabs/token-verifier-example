@@ -4,19 +4,25 @@ go 1.19
 
 require (
 	github.com/gofrs/uuid v4.3.1+incompatible
+	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/google/uuid v1.1.2
 	github.com/lib/pq v1.10.2
 	github.com/rs/zerolog v1.28.0
 	github.com/spf13/viper v1.14.0
 	golang.org/x/crypto v0.0.0-20221005025214-4161e89ecf1b
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.28.1
+	gorm.io/datatypes v1.1.0
 	gorm.io/driver/postgres v1.4.5
 	gorm.io/gen v0.3.18
 	gorm.io/gorm v1.24.2
 	gorm.io/plugin/dbresolver v1.4.0
 )
 
+require github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
+
 require (
+	github.com/MicahParks/keyfunc v1.7.0
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -51,7 +57,6 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/datatypes v1.1.0 // indirect
 	gorm.io/driver/mysql v1.4.4 // indirect
 	gorm.io/hints v1.1.1 // indirect
 )

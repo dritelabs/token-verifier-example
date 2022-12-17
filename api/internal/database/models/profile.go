@@ -13,7 +13,7 @@ type Profile struct {
 	gorm.Model
 	ID         uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primarykey"`
 	UserID     uuid.UUID
-	BirthDate  time.Time
+	BirthDate  *time.Time
 	FirstName  sql.NullString
 	Gender     sql.NullString
 	Locale     sql.NullString
