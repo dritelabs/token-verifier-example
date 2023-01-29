@@ -1,5 +1,7 @@
+<script setup lang="ts">
+// const event = useRequestEvent();
+</script>
+
 <template>
-  <div>
-    <NuxtWelcome />
-  </div>
+  <div>Hello</div>
 </template>

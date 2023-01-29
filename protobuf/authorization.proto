@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package pb;
+
+import "code_challenge_method.proto";
+import "client.proto";
+import "scope.proto";
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+message AuthorizationRequest {
+  string client_id = 1;
+  string code_challenge = 2;
+  optional CodeChallengeMethod code_challenge_method = 3;
+  string redirect_uri = 4;
+  optional string scope = 5;
+  optional string state = 6;
+}
+
+message AuthorizationResponse {
+  Client client = 1;
+  repeated Scope scopes = 2;
+}
+
+message CreateAuthorizationRequest {
+  string client_id = 1;
+  string code_challenge = 2;
+  optional CodeChallengeMethod code_challenge_method = 3;
+  string redirect_uri = 4;
+  optional string scope = 5;
+  optional string state = 6;
+}
+
+message CreateAuthorizationResponse {
+  string redirect_uri = 1;
+}
+

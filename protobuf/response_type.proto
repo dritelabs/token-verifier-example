@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+enum ResponseType {
+  CODE = 0;
+}

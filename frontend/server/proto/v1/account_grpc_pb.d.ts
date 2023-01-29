@@ -6,124 +6,72 @@
 
 import * as grpc from "@grpc/grpc-js";
 import * as v1_account_pb from "../v1/account_pb";
-import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
-import * as v1_user_pb from "../v1/user_pb";
-import * as v1_jwk_pb from "../v1/jwk_pb";
+import * as v1_authorization_pb from "../v1/authorization_pb";
+import * as v1_token_pb from "../v1/token_pb";
 
 interface IAccountService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-    createUser: IAccountService_ICreateUser;
-    deleteUser: IAccountService_IDeleteUser;
-    getUser: IAccountService_IGetUser;
-    listUsers: IAccountService_IListUsers;
-    updateUser: IAccountService_IUpdateUser;
-    getJwks: IAccountService_IGetJwks;
+    authorize: IAccountService_IAuthorize;
+    createAuthorization: IAccountService_ICreateAuthorization;
+    token: IAccountService_IToken;
 }
 
-interface IAccountService_ICreateUser extends grpc.MethodDefinition<v1_user_pb.CreateUserRequest, v1_user_pb.User> {
-    path: "/v1.Account/CreateUser";
+interface IAccountService_IAuthorize extends grpc.MethodDefinition<v1_authorization_pb.AuthorizationRequest, v1_authorization_pb.AuthorizationResponse> {
+    path: "/v1.Account/Authorize";
     requestStream: false;
     responseStream: false;
-    requestSerialize: grpc.serialize<v1_user_pb.CreateUserRequest>;
-    requestDeserialize: grpc.deserialize<v1_user_pb.CreateUserRequest>;
-    responseSerialize: grpc.serialize<v1_user_pb.User>;
-    responseDeserialize: grpc.deserialize<v1_user_pb.User>;
+    requestSerialize: grpc.serialize<v1_authorization_pb.AuthorizationRequest>;
+    requestDeserialize: grpc.deserialize<v1_authorization_pb.AuthorizationRequest>;
+    responseSerialize: grpc.serialize<v1_authorization_pb.AuthorizationResponse>;
+    responseDeserialize: grpc.deserialize<v1_authorization_pb.AuthorizationResponse>;
 }
-interface IAccountService_IDeleteUser extends grpc.MethodDefinition<v1_user_pb.DeleteUserRequest, v1_user_pb.User> {
-    path: "/v1.Account/DeleteUser";
+interface IAccountService_ICreateAuthorization extends grpc.MethodDefinition<v1_authorization_pb.CreateAuthorizationRequest, v1_authorization_pb.CreateAuthorizationResponse> {
+    path: "/v1.Account/CreateAuthorization";
     requestStream: false;
     responseStream: false;
-    requestSerialize: grpc.serialize<v1_user_pb.DeleteUserRequest>;
-    requestDeserialize: grpc.deserialize<v1_user_pb.DeleteUserRequest>;
-    responseSerialize: grpc.serialize<v1_user_pb.User>;
-    responseDeserialize: grpc.deserialize<v1_user_pb.User>;
+    requestSerialize: grpc.serialize<v1_authorization_pb.CreateAuthorizationRequest>;
+    requestDeserialize: grpc.deserialize<v1_authorization_pb.CreateAuthorizationRequest>;
+    responseSerialize: grpc.serialize<v1_authorization_pb.CreateAuthorizationResponse>;
+    responseDeserialize: grpc.deserialize<v1_authorization_pb.CreateAuthorizationResponse>;
 }
-interface IAccountService_IGetUser extends grpc.MethodDefinition<v1_user_pb.GetUserRequest, v1_user_pb.User> {
-    path: "/v1.Account/GetUser";
+interface IAccountService_IToken extends grpc.MethodDefinition<v1_token_pb.TokenRequest, v1_token_pb.TokenResponse> {
+    path: "/v1.Account/Token";
     requestStream: false;
     responseStream: false;
-    requestSerialize: grpc.serialize<v1_user_pb.GetUserRequest>;
-    requestDeserialize: grpc.deserialize<v1_user_pb.GetUserRequest>;
-    responseSerialize: grpc.serialize<v1_user_pb.User>;
-    responseDeserialize: grpc.deserialize<v1_user_pb.User>;
-}
-interface IAccountService_IListUsers extends grpc.MethodDefinition<v1_user_pb.ListUsersRequest, v1_user_pb.ListUsersResponse> {
-    path: "/v1.Account/ListUsers";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<v1_user_pb.ListUsersRequest>;
-    requestDeserialize: grpc.deserialize<v1_user_pb.ListUsersRequest>;
-    responseSerialize: grpc.serialize<v1_user_pb.ListUsersResponse>;
-    responseDeserialize: grpc.deserialize<v1_user_pb.ListUsersResponse>;
-}
-interface IAccountService_IUpdateUser extends grpc.MethodDefinition<v1_user_pb.UpdateUserRequest, v1_user_pb.User> {
-    path: "/v1.Account/UpdateUser";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<v1_user_pb.UpdateUserRequest>;
-    requestDeserialize: grpc.deserialize<v1_user_pb.UpdateUserRequest>;
-    responseSerialize: grpc.serialize<v1_user_pb.User>;
-    responseDeserialize: grpc.deserialize<v1_user_pb.User>;
-}
-interface IAccountService_IGetJwks extends grpc.MethodDefinition<v1_jwk_pb.GetJwksRequest, google_protobuf_any_pb.Any> {
-    path: "/v1.Account/GetJwks";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<v1_jwk_pb.GetJwksRequest>;
-    requestDeserialize: grpc.deserialize<v1_jwk_pb.GetJwksRequest>;
-    responseSerialize: grpc.serialize<google_protobuf_any_pb.Any>;
-    responseDeserialize: grpc.deserialize<google_protobuf_any_pb.Any>;
+    requestSerialize: grpc.serialize<v1_token_pb.TokenRequest>;
+    requestDeserialize: grpc.deserialize<v1_token_pb.TokenRequest>;
+    responseSerialize: grpc.serialize<v1_token_pb.TokenResponse>;
+    responseDeserialize: grpc.deserialize<v1_token_pb.TokenResponse>;
 }
 
 export const AccountService: IAccountService;
 
 export interface IAccountServer extends grpc.UntypedServiceImplementation {
-    createUser: grpc.handleUnaryCall<v1_user_pb.CreateUserRequest, v1_user_pb.User>;
-    deleteUser: grpc.handleUnaryCall<v1_user_pb.DeleteUserRequest, v1_user_pb.User>;
-    getUser: grpc.handleUnaryCall<v1_user_pb.GetUserRequest, v1_user_pb.User>;
-    listUsers: grpc.handleUnaryCall<v1_user_pb.ListUsersRequest, v1_user_pb.ListUsersResponse>;
-    updateUser: grpc.handleUnaryCall<v1_user_pb.UpdateUserRequest, v1_user_pb.User>;
-    getJwks: grpc.handleUnaryCall<v1_jwk_pb.GetJwksRequest, google_protobuf_any_pb.Any>;
+    authorize: grpc.handleUnaryCall<v1_authorization_pb.AuthorizationRequest, v1_authorization_pb.AuthorizationResponse>;
+    createAuthorization: grpc.handleUnaryCall<v1_authorization_pb.CreateAuthorizationRequest, v1_authorization_pb.CreateAuthorizationResponse>;
+    token: grpc.handleUnaryCall<v1_token_pb.TokenRequest, v1_token_pb.TokenResponse>;
 }
 
 export interface IAccountClient {
-    createUser(request: v1_user_pb.CreateUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    createUser(request: v1_user_pb.CreateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    createUser(request: v1_user_pb.CreateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    deleteUser(request: v1_user_pb.DeleteUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    deleteUser(request: v1_user_pb.DeleteUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    deleteUser(request: v1_user_pb.DeleteUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    getUser(request: v1_user_pb.GetUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    getUser(request: v1_user_pb.GetUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    getUser(request: v1_user_pb.GetUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    listUsers(request: v1_user_pb.ListUsersRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.ListUsersResponse) => void): grpc.ClientUnaryCall;
-    listUsers(request: v1_user_pb.ListUsersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.ListUsersResponse) => void): grpc.ClientUnaryCall;
-    listUsers(request: v1_user_pb.ListUsersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.ListUsersResponse) => void): grpc.ClientUnaryCall;
-    updateUser(request: v1_user_pb.UpdateUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    updateUser(request: v1_user_pb.UpdateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    updateUser(request: v1_user_pb.UpdateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    getJwks(request: v1_jwk_pb.GetJwksRequest, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
-    getJwks(request: v1_jwk_pb.GetJwksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
-    getJwks(request: v1_jwk_pb.GetJwksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
+    authorize(request: v1_authorization_pb.AuthorizationRequest, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.AuthorizationResponse) => void): grpc.ClientUnaryCall;
+    authorize(request: v1_authorization_pb.AuthorizationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.AuthorizationResponse) => void): grpc.ClientUnaryCall;
+    authorize(request: v1_authorization_pb.AuthorizationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.AuthorizationResponse) => void): grpc.ClientUnaryCall;
+    createAuthorization(request: v1_authorization_pb.CreateAuthorizationRequest, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.CreateAuthorizationResponse) => void): grpc.ClientUnaryCall;
+    createAuthorization(request: v1_authorization_pb.CreateAuthorizationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.CreateAuthorizationResponse) => void): grpc.ClientUnaryCall;
+    createAuthorization(request: v1_authorization_pb.CreateAuthorizationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.CreateAuthorizationResponse) => void): grpc.ClientUnaryCall;
+    token(request: v1_token_pb.TokenRequest, callback: (error: grpc.ServiceError | null, response: v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
+    token(request: v1_token_pb.TokenRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
+    token(request: v1_token_pb.TokenRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class AccountClient extends grpc.Client implements IAccountClient {
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: Partial<grpc.ClientOptions>);
-    public createUser(request: v1_user_pb.CreateUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public createUser(request: v1_user_pb.CreateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public createUser(request: v1_user_pb.CreateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public deleteUser(request: v1_user_pb.DeleteUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public deleteUser(request: v1_user_pb.DeleteUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public deleteUser(request: v1_user_pb.DeleteUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public getUser(request: v1_user_pb.GetUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public getUser(request: v1_user_pb.GetUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public getUser(request: v1_user_pb.GetUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public listUsers(request: v1_user_pb.ListUsersRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.ListUsersResponse) => void): grpc.ClientUnaryCall;
-    public listUsers(request: v1_user_pb.ListUsersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.ListUsersResponse) => void): grpc.ClientUnaryCall;
-    public listUsers(request: v1_user_pb.ListUsersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.ListUsersResponse) => void): grpc.ClientUnaryCall;
-    public updateUser(request: v1_user_pb.UpdateUserRequest, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public updateUser(request: v1_user_pb.UpdateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public updateUser(request: v1_user_pb.UpdateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_user_pb.User) => void): grpc.ClientUnaryCall;
-    public getJwks(request: v1_jwk_pb.GetJwksRequest, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
-    public getJwks(request: v1_jwk_pb.GetJwksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
-    public getJwks(request: v1_jwk_pb.GetJwksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_any_pb.Any) => void): grpc.ClientUnaryCall;
+    public authorize(request: v1_authorization_pb.AuthorizationRequest, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.AuthorizationResponse) => void): grpc.ClientUnaryCall;
+    public authorize(request: v1_authorization_pb.AuthorizationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.AuthorizationResponse) => void): grpc.ClientUnaryCall;
+    public authorize(request: v1_authorization_pb.AuthorizationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.AuthorizationResponse) => void): grpc.ClientUnaryCall;
+    public createAuthorization(request: v1_authorization_pb.CreateAuthorizationRequest, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.CreateAuthorizationResponse) => void): grpc.ClientUnaryCall;
+    public createAuthorization(request: v1_authorization_pb.CreateAuthorizationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.CreateAuthorizationResponse) => void): grpc.ClientUnaryCall;
+    public createAuthorization(request: v1_authorization_pb.CreateAuthorizationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_authorization_pb.CreateAuthorizationResponse) => void): grpc.ClientUnaryCall;
+    public token(request: v1_token_pb.TokenRequest, callback: (error: grpc.ServiceError | null, response: v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
+    public token(request: v1_token_pb.TokenRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
+    public token(request: v1_token_pb.TokenRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
 }

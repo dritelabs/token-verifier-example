@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
+import "application_type.proto";
+import "client_approval.proto";
+import "grant_type.proto";
+import "public_keys_configuration.proto";
+import "refresh_token_rotation_type.proto";
+import "response_type.proto";
+import "token_endpoint_auth_method.proto";
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+message Client {
+  string id = 1;
+  string user_id = 2;
+  repeated string contacts = 3;
+  repeated ClientApproval client_approvals = 4;
+  string description = 5;
+  repeated GrantType grant_types = 6;
+  bool is_first_party = 7;
+  repeated google.protobuf.Any jwks = 8;
+  string jwks_uri = 9;
+  string logo_uri = 10;
+  string name = 11;
+  string policy_uri = 12;
+  PublicKeysConfiguration public_keys_configuration = 13;
+  repeated string redirect_uris = 14;
+  RefreshTokenRotationType refresh_token_rotation_type = 15;
+  repeated ResponseType response_types = 16;
+  string secret = 17;
+  repeated string scope = 18;
+  string software_id = 19;
+  string software_version = 20;
+  ApplicationType type = 21;
+  string tos_uri = 22;
+  TokenEndpointAuthMethod token_endpoint_auth_method = 23;
+  string uri = 24;
+  google.protobuf.Timestamp created_at = 25;
+  google.protobuf.Timestamp updated_at = 26;
+}
+
+message ClientsResponse {
+  repeated Client clients = 1;
+}
+
+message CreateClientRequest {
+  string description = 5;
+  string name = 11;
+  repeated string redirect_uris = 14;
+  ApplicationType type = 21;
+}
+
+message DeleteClientRequest {
+  string id = 1;
+}
+
+message GetClientRequest {
+  string id = 1;
+}
+
+message ListClientsRequest {}
+
+message ListClientsResponse {
+  repeated Client clients = 1;
+}
+
+
+message UpdateClientRequest {
+  repeated string contacts = 3;
+  optional string description = 5;
+  repeated GrantType grant_types = 6;
+  optional bool is_first_party = 7;
+  repeated google.protobuf.Any jwks = 8;
+  optional string jwks_uri = 9;
+  optional string logo_uri = 10;
+  optional string name = 11;
+  optional string policy_uri = 12;
+  optional PublicKeysConfiguration public_keys_configuration = 13;
+  repeated string redirect_uris = 14;
+  RefreshTokenRotationType refresh_token_rotation_type = 15;
+  repeated ResponseType response_types = 16;
+  optional string secret = 17;
+  repeated string scope = 18;
+  optional string software_id = 19;
+  optional string software_version = 20;
+  ApplicationType type = 21;
+  optional string tos_uri = 22;
+  TokenEndpointAuthMethod token_endpoint_auth_method = 23;
+  optional string uri = 24;
+}

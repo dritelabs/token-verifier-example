@@ -8,6 +8,6 @@ import * as jspb from "google-protobuf";
 
 export enum TokenEndpointAuthMethod {
     CLIENT_SECRET_BASIC = 0,
-    NONE = 1,
-    PRIVATE_KEY_JWT = 2,
+    PRIVATE_KEY_JWT = 1,
+    NONE = 2,
 }

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+enum Gender {
+  UNSPECIFIED = 0;
+  FEMALE = 1;
+  MALE = 2;
+}

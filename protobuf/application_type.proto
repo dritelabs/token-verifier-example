@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/dritelabs/accounts/pb";
+
+enum ApplicationType {
+  WEB = 0;
+  NATIVE = 1;
+  BROWSER = 2;
+}

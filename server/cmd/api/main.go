@@ -6,10 +6,9 @@ import (
 
 	"github.com/dritelabs/accounts/internal/config"
 	"github.com/dritelabs/accounts/internal/database"
+	"github.com/dritelabs/accounts/internal/gapi"
 	"github.com/dritelabs/accounts/internal/logger"
-	pb "github.com/dritelabs/accounts/internal/proto/v1"
-	"github.com/dritelabs/accounts/internal/server"
-	"github.com/dritelabs/accounts/internal/token"
+	pb "github.com/dritelabs/accounts/internal/proto"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -17,6 +16,7 @@ import (
 )
 
 func main() {
+
 	conf, err := config.LoadConfig(".")
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to load config")
@@ -36,27 +36,23 @@ func main() {
 		log.Fatal().Err(err).Msg("Failed to load jwks")
 	}
 
-	tokenMaker, err := token.NewJWTMaker(privateKey)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Failed to create token maker")
-	}
-
-	db, err := database.New(conf.DBSource)
+	store, err := database.NewDatabase(conf.DBSource)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect database")
 	}
 
-	database.AutoMigrate(db)
+	database.AutoMigrate(store)
+
+	accountServerConfig := &gapi.AccountServerConfig{
+		Config:     conf,
+		Store:      store,
+		Jwks:       jwks,
+		PrivateKey: privateKey,
+	}
 
 	grpcLogger := grpc.UnaryInterceptor(logger.GrpcLogger)
 	grpcServer := grpc.NewServer(grpcLogger)
-	accountServer := server.New(&server.AccountServerConfig{
-		Config:     conf,
-		DB:         db,
-		Jwks:       jwks,
-		PrivateKey: privateKey,
-		TokenMaker: tokenMaker,
-	})
+	accountServer := gapi.NewServer(accountServerConfig)
 
 	pb.RegisterAccountServer(grpcServer, accountServer)
 	reflection.Register(grpcServer)

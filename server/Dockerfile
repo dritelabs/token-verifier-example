@@ -1,21 +1,35 @@
-# Build stage
-FROM golang:1.19-alpine AS builder
+# ---------- development
 
-WORKDIR /app
+FROM golang:1.18
 
-COPY . .
+RUN go install github.com/cespare/reflex@v0.3.1
+COPY reflex.conf /
 
-RUN go build -o /app/cmd/api/main /app/cmd/api/main.go
+# COPY start.sh /
 
-# Run stage
-FROM alpine:3.16
+CMD ["reflex", "-c", "/reflex.conf"]
 
-WORKDIR /app
 
-COPY --from=builder /app/cmd/api/main .
+# --------- prod
 
-COPY app.env .
+# # Build stage
+# FROM golang:1.19-alpine AS builder
 
-EXPOSE 8080
+# WORKDIR /app
 
-CMD [ "/app/main" ]
+# COPY . .
+
+# RUN go build -o /app/cmd/api/main /app/cmd/api/main.go
+
+# # Run stage
+# FROM alpine:3.16
+
+# WORKDIR /app
+
+# COPY --from=builder /app/cmd/api/main .
+
+# COPY app.env .
+
+# EXPOSE 8080
+
+# CMD [ "/app/main" ]

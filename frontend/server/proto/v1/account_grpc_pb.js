@@ -2,177 +2,124 @@
 
 'use strict';
 var grpc = require('@grpc/grpc-js');
-var google_protobuf_any_pb = require('google-protobuf/google/protobuf/any_pb.js');
-var v1_user_pb = require('../v1/user_pb.js');
-var v1_jwk_pb = require('../v1/jwk_pb.js');
+var v1_authorization_pb = require('../v1/authorization_pb.js');
+var v1_token_pb = require('../v1/token_pb.js');
 
-function serialize_google_protobuf_Any(arg) {
-  if (!(arg instanceof google_protobuf_any_pb.Any)) {
-    throw new Error('Expected argument of type google.protobuf.Any');
+function serialize_v1_AuthorizationRequest(arg) {
+  if (!(arg instanceof v1_authorization_pb.AuthorizationRequest)) {
+    throw new Error('Expected argument of type v1.AuthorizationRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_google_protobuf_Any(buffer_arg) {
-  return google_protobuf_any_pb.Any.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_v1_AuthorizationRequest(buffer_arg) {
+  return v1_authorization_pb.AuthorizationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_v1_CreateUserRequest(arg) {
-  if (!(arg instanceof v1_user_pb.CreateUserRequest)) {
-    throw new Error('Expected argument of type v1.CreateUserRequest');
+function serialize_v1_AuthorizationResponse(arg) {
+  if (!(arg instanceof v1_authorization_pb.AuthorizationResponse)) {
+    throw new Error('Expected argument of type v1.AuthorizationResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_v1_CreateUserRequest(buffer_arg) {
-  return v1_user_pb.CreateUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_v1_AuthorizationResponse(buffer_arg) {
+  return v1_authorization_pb.AuthorizationResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_v1_DeleteUserRequest(arg) {
-  if (!(arg instanceof v1_user_pb.DeleteUserRequest)) {
-    throw new Error('Expected argument of type v1.DeleteUserRequest');
+function serialize_v1_CreateAuthorizationRequest(arg) {
+  if (!(arg instanceof v1_authorization_pb.CreateAuthorizationRequest)) {
+    throw new Error('Expected argument of type v1.CreateAuthorizationRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_v1_DeleteUserRequest(buffer_arg) {
-  return v1_user_pb.DeleteUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_v1_CreateAuthorizationRequest(buffer_arg) {
+  return v1_authorization_pb.CreateAuthorizationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_v1_GetJwksRequest(arg) {
-  if (!(arg instanceof v1_jwk_pb.GetJwksRequest)) {
-    throw new Error('Expected argument of type v1.GetJwksRequest');
+function serialize_v1_CreateAuthorizationResponse(arg) {
+  if (!(arg instanceof v1_authorization_pb.CreateAuthorizationResponse)) {
+    throw new Error('Expected argument of type v1.CreateAuthorizationResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_v1_GetJwksRequest(buffer_arg) {
-  return v1_jwk_pb.GetJwksRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_v1_CreateAuthorizationResponse(buffer_arg) {
+  return v1_authorization_pb.CreateAuthorizationResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_v1_GetUserRequest(arg) {
-  if (!(arg instanceof v1_user_pb.GetUserRequest)) {
-    throw new Error('Expected argument of type v1.GetUserRequest');
+function serialize_v1_TokenRequest(arg) {
+  if (!(arg instanceof v1_token_pb.TokenRequest)) {
+    throw new Error('Expected argument of type v1.TokenRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_v1_GetUserRequest(buffer_arg) {
-  return v1_user_pb.GetUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_v1_TokenRequest(buffer_arg) {
+  return v1_token_pb.TokenRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_v1_ListUsersRequest(arg) {
-  if (!(arg instanceof v1_user_pb.ListUsersRequest)) {
-    throw new Error('Expected argument of type v1.ListUsersRequest');
+function serialize_v1_TokenResponse(arg) {
+  if (!(arg instanceof v1_token_pb.TokenResponse)) {
+    throw new Error('Expected argument of type v1.TokenResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_v1_ListUsersRequest(buffer_arg) {
-  return v1_user_pb.ListUsersRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_v1_ListUsersResponse(arg) {
-  if (!(arg instanceof v1_user_pb.ListUsersResponse)) {
-    throw new Error('Expected argument of type v1.ListUsersResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_v1_ListUsersResponse(buffer_arg) {
-  return v1_user_pb.ListUsersResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_v1_UpdateUserRequest(arg) {
-  if (!(arg instanceof v1_user_pb.UpdateUserRequest)) {
-    throw new Error('Expected argument of type v1.UpdateUserRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_v1_UpdateUserRequest(buffer_arg) {
-  return v1_user_pb.UpdateUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_v1_User(arg) {
-  if (!(arg instanceof v1_user_pb.User)) {
-    throw new Error('Expected argument of type v1.User');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_v1_User(buffer_arg) {
-  return v1_user_pb.User.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_v1_TokenResponse(buffer_arg) {
+  return v1_token_pb.TokenResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
 var AccountService = exports.AccountService = {
-  createUser: {
-    path: '/v1.Account/CreateUser',
+  authorize: {
+    path: '/v1.Account/Authorize',
     requestStream: false,
     responseStream: false,
-    requestType: v1_user_pb.CreateUserRequest,
-    responseType: v1_user_pb.User,
-    requestSerialize: serialize_v1_CreateUserRequest,
-    requestDeserialize: deserialize_v1_CreateUserRequest,
-    responseSerialize: serialize_v1_User,
-    responseDeserialize: deserialize_v1_User,
+    requestType: v1_authorization_pb.AuthorizationRequest,
+    responseType: v1_authorization_pb.AuthorizationResponse,
+    requestSerialize: serialize_v1_AuthorizationRequest,
+    requestDeserialize: deserialize_v1_AuthorizationRequest,
+    responseSerialize: serialize_v1_AuthorizationResponse,
+    responseDeserialize: deserialize_v1_AuthorizationResponse,
   },
-  deleteUser: {
-    path: '/v1.Account/DeleteUser',
+  createAuthorization: {
+    path: '/v1.Account/CreateAuthorization',
     requestStream: false,
     responseStream: false,
-    requestType: v1_user_pb.DeleteUserRequest,
-    responseType: v1_user_pb.User,
-    requestSerialize: serialize_v1_DeleteUserRequest,
-    requestDeserialize: deserialize_v1_DeleteUserRequest,
-    responseSerialize: serialize_v1_User,
-    responseDeserialize: deserialize_v1_User,
+    requestType: v1_authorization_pb.CreateAuthorizationRequest,
+    responseType: v1_authorization_pb.CreateAuthorizationResponse,
+    requestSerialize: serialize_v1_CreateAuthorizationRequest,
+    requestDeserialize: deserialize_v1_CreateAuthorizationRequest,
+    responseSerialize: serialize_v1_CreateAuthorizationResponse,
+    responseDeserialize: deserialize_v1_CreateAuthorizationResponse,
   },
-  getUser: {
-    path: '/v1.Account/GetUser',
+  token: {
+    path: '/v1.Account/Token',
     requestStream: false,
     responseStream: false,
-    requestType: v1_user_pb.GetUserRequest,
-    responseType: v1_user_pb.User,
-    requestSerialize: serialize_v1_GetUserRequest,
-    requestDeserialize: deserialize_v1_GetUserRequest,
-    responseSerialize: serialize_v1_User,
-    responseDeserialize: deserialize_v1_User,
+    requestType: v1_token_pb.TokenRequest,
+    responseType: v1_token_pb.TokenResponse,
+    requestSerialize: serialize_v1_TokenRequest,
+    requestDeserialize: deserialize_v1_TokenRequest,
+    responseSerialize: serialize_v1_TokenResponse,
+    responseDeserialize: deserialize_v1_TokenResponse,
   },
-  listUsers: {
-    path: '/v1.Account/ListUsers',
-    requestStream: false,
-    responseStream: false,
-    requestType: v1_user_pb.ListUsersRequest,
-    responseType: v1_user_pb.ListUsersResponse,
-    requestSerialize: serialize_v1_ListUsersRequest,
-    requestDeserialize: deserialize_v1_ListUsersRequest,
-    responseSerialize: serialize_v1_ListUsersResponse,
-    responseDeserialize: deserialize_v1_ListUsersResponse,
-  },
-  updateUser: {
-    path: '/v1.Account/UpdateUser',
-    requestStream: false,
-    responseStream: false,
-    requestType: v1_user_pb.UpdateUserRequest,
-    responseType: v1_user_pb.User,
-    requestSerialize: serialize_v1_UpdateUserRequest,
-    requestDeserialize: deserialize_v1_UpdateUserRequest,
-    responseSerialize: serialize_v1_User,
-    responseDeserialize: deserialize_v1_User,
-  },
-  getJwks: {
-    path: '/v1.Account/GetJwks',
-    requestStream: false,
-    responseStream: false,
-    requestType: v1_jwk_pb.GetJwksRequest,
-    responseType: google_protobuf_any_pb.Any,
-    requestSerialize: serialize_v1_GetJwksRequest,
-    requestDeserialize: deserialize_v1_GetJwksRequest,
-    responseSerialize: serialize_google_protobuf_Any,
-    responseDeserialize: deserialize_google_protobuf_Any,
-  },
+  // rpc CreateAuthorization(CreateAuthorizationRequest) returns (AuthorizationResponse);
+// rpc CreateClient(CreateClientRequest) returns (ClientResponse);
+// rpc CreateToken(CreateTokenRequest) returns (TokenResponse);
+// rpc CreateUser (CreateUserRequest) returns (UserResponse);
+// rpc DeleteClient (DeleteClientRequest) returns (ClientResponse);
+// rpc DeleteUser (DeleteUserRequest) returns (UserResponse);
+// rpc GetClient (GetClientRequest) returns (ClientResponse);
+// rpc GetClients (GetClientsRequest) returns (ClientsResponse);
+// rpc GetJwks (GetJwksRequest) returns (google.protobuf.Any);
+// rpc GetUser (GetUserRequest) returns (UserResponse);
+// rpc GetUsers (GetUsersRequest) returns (UsersResponse);
+// rpc UpdateClient (UpdateClientRequest) returns (ClientResponse);
+// rpc UpdateUser (UpdateUserRequest) returns (UserResponse);
+// rpc VerifyAuthorization (VerifyAuthorizationRequest) returns (VerifyAuthorizationResponse);
 };
 
 exports.AccountClient = grpc.makeGenericClientConstructor(AccountService);
