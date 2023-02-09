@@ -2,7 +2,6 @@ package models
 
 import (
 	"database/sql"
-	"time"
 
 	gonanoid "github.com/matoous/go-nanoid/v2"
 	"gorm.io/datatypes"
@@ -13,11 +12,11 @@ type Profile struct {
 	gorm.Model
 	ID         string `gorm:"primarykey"`
 	UserID     string
-	BirthDate  *time.Time
-	GivenName  string
+	BirthDate  sql.NullTime
+	GivenName  sql.NullString
 	Gender     sql.NullString
 	Locale     sql.NullString
-	MiddleName string
+	MiddleName sql.NullString
 	Nickname   sql.NullString
 	Profile    datatypes.URL
 	Picture    datatypes.URL

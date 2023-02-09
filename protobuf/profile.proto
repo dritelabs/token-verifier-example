@@ -24,3 +24,17 @@ message Profile {
   google.protobuf.Timestamp created_at = 13;
   google.protobuf.Timestamp updated_at = 14;
 }
+
+message UpdateProfileRequest {
+  string id = 1;
+  optional google.protobuf.Timestamp birthdate = 3;
+  optional Gender gender = 4;
+  optional string locale = 5;
+  optional string given_name = 6;
+  optional string middle_name = 7;
+  optional string nickname = 8;
+  optional string profile = 9;
+  optional string picture = 10;
+  optional string website = 11;
+  optional string zoneinfo = 12;
+}

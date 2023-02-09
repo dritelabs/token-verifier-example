@@ -8,60 +8,47 @@ import (
 )
 
 func SerializeUserModelToUserMessage(u models.User) *pb.User {
-	var (
-		phoneNumber = ""
-		username    = ""
-	)
-
-	if u.PhoneNumber.Valid {
-		phoneNumber = u.PhoneNumber.String
-	}
-
-	if u.Username.Valid {
-		username = u.Username.String
-	}
-
 	return &pb.User{
 		Id:                  u.ID,
 		Blocked:             false,
 		Clients:             []*pb.Client{},
 		ClientApprovals:     []*pb.ClientApproval{},
-		Email:               u.Email,
+		Email:               u.Email.String,
 		EmailVerified:       u.EmailVerified,
 		LastIp:              "",
 		LastLogin:           timestamppb.New(u.CreatedAt),
 		LastPasswordReset:   timestamppb.New(u.CreatedAt),
 		LoginsCount:         0,
 		Password:            u.Password,
-		PhoneNumber:         phoneNumber,
+		PhoneNumber:         u.PhoneNumber.String,
 		PhoneNumberVerified: u.PhoneNumberVerified,
-		Profile:             SerializeProfileModelToProfileMessage(*u.Profile),
-		Username:            username,
+		Profile:             SerializeProfileModelToProfileMessage(u.Profile),
+		Username:            u.Username.String,
 		CreatedAt:           timestamppb.New(u.CreatedAt),
 		UpdatedAt:           timestamppb.New(u.UpdatedAt),
 	}
 }
 
-func SerializeProfileModelToProfileMessage(p models.Profile) *pb.Profile {
+func SerializeProfileModelToProfileMessage(p *models.Profile) *pb.Profile {
 	return &pb.Profile{
 		Id:         p.ID,
 		UserId:     p.UserID,
-		Birthdate:  &timestamppb.Timestamp{},
-		Gender:     0,
-		Locale:     "",
-		GivenName:  p.GivenName,
-		MiddleName: p.MiddleName,
-		Nickname:   "",
-		Profile:    "",
-		Picture:    "",
-		Website:    "",
-		Zoneinfo:   "",
-		CreatedAt:  &timestamppb.Timestamp{},
-		UpdatedAt:  &timestamppb.Timestamp{},
+		Birthdate:  timestamppb.New(p.BirthDate.Time),
+		Gender:     pb.Gender(pb.Gender_value[p.Gender.String]),
+		Locale:     p.Locale.String,
+		GivenName:  p.GivenName.String,
+		MiddleName: p.MiddleName.String,
+		Nickname:   p.Nickname.String,
+		Profile:    p.Profile.Host,
+		Picture:    p.Picture.Host,
+		Website:    p.Website.Host,
+		Zoneinfo:   p.ZoneInfo.String,
+		CreatedAt:  timestamppb.New(p.CreatedAt),
+		UpdatedAt:  timestamppb.New(p.UpdatedAt),
 	}
 }
 
-func SerializeClientModelToClientMessage(c models.Client) *pb.Client {
+func SerializeClientModelToClientMessage(c *models.Client) *pb.Client {
 	responseType := []pb.ResponseType{}
 
 	for _, v := range c.ResponseTypes {
@@ -102,7 +89,17 @@ func SerializeClientModelListToClientMessageList(clients []models.Client) []*pb.
 	var res []*pb.Client
 
 	for _, c := range clients {
-		res = append(res, SerializeClientModelToClientMessage(c))
+		res = append(res, SerializeClientModelToClientMessage(&c))
+	}
+
+	return res
+}
+
+func SerializeUserModelListToUserMessageList(users []models.User) []*pb.User {
+	var res []*pb.User
+
+	for _, c := range users {
+		res = append(res, SerializeUserModelToUserMessage(c))
 	}
 
 	return res

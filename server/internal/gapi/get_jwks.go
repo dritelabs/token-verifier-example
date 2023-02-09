@@ -9,6 +9,6 @@ import (
 
 func (s *AccountServer) GetJwks(ctx context.Context, in *pb.GetJwksRequest) (*anypb.Any, error) {
 	return &anypb.Any{
-		Value: []byte(s.Jwks),
+		Value: []byte(s.jwks),
 	}, nil
 }

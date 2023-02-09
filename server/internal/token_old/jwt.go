@@ -1,9 +1,8 @@
-package token
+package token_old
 
 import (
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/MicahParks/keyfunc"
 	"github.com/golang-jwt/jwt/v4"
@@ -49,10 +48,10 @@ func Verify(token string, claims *Claims) bool {
 		RefreshErrorHandler: func(err error) {
 			log.Printf("There was an error with the jwt.Keyfunc\nError: %s", err.Error())
 		},
-		RefreshInterval:   time.Hour,
-		RefreshRateLimit:  time.Minute * 5,
-		RefreshTimeout:    time.Second * 10,
-		RefreshUnknownKID: true,
+		// RefreshInterval:   time.Hour,
+		// RefreshRateLimit:  time.Minute * 5,
+		// RefreshTimeout:    time.Second * 10,
+		// RefreshUnknownKID: true,
 	})
 	if err != nil {
 		log.Fatalf("Failed to get the JWKS from the given URL.\nError: %s", err)

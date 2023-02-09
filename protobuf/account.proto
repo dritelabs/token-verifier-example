@@ -20,14 +20,14 @@ service Account {
   rpc CreateClient(CreateClientRequest) returns (Client);
   // rpc CreateToken(CreateTokenRequest) returns (TokenResponse);
   rpc CreateUser (CreateUserRequest) returns (User);
-  // rpc DeleteClient (DeleteClientRequest) returns (ClientResponse);
+  rpc DeleteClient (DeleteClientRequest) returns (Client);
   // rpc DeleteUser (DeleteUserRequest) returns (UserResponse);
   rpc GetClient (GetClientRequest) returns (Client);
-  rpc ListClients (ListClientsRequest) returns (ListClientsResponse);
   rpc GetJwks (GetJwksRequest) returns (google.protobuf.Any);
-  // rpc GetUser (GetUserRequest) returns (UserResponse);
-  // rpc GetUsers (GetUsersRequest) returns (UsersResponse);
+  rpc GetUser (GetUserRequest) returns (User);
+  rpc ListClients (ListClientsRequest) returns (ListClientsResponse);
+  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse);
   // rpc UpdateClient (UpdateClientRequest) returns (ClientResponse);
-  // rpc UpdateUser (UpdateUserRequest) returns (UserResponse);
+  rpc UpdateUser (UpdateUserRequest) returns (User);
   // rpc VerifyAuthorization (VerifyAuthorizationRequest) returns (VerifyAuthorizationResponse);
 }

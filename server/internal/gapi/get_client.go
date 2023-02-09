@@ -18,15 +18,15 @@ func (s *AccountServer) GetClient(ctx context.Context, req *pb.GetClientRequest)
 
 	c := models.Client{}
 
-	if err := s.Store.First(&c, "id = ?", req.GetId()).Error; err != nil {
+	if err := s.store.First(&c, "id = ?", req.GetId()).Error; err != nil {
 		log.Error().Msgf("failed to fetch client: %s", err)
 
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, status.Errorf(codes.NotFound, "Invalid client")
+			return nil, status.Errorf(codes.NotFound, "client not found")
 		}
 
-		return nil, status.Errorf(codes.Internal, "Invalid client")
+		return nil, status.Errorf(codes.Internal, "client not found")
 	}
 
-	return serializer.SerializeClientModelToClientMessage(c), nil
+	return serializer.SerializeClientModelToClientMessage(&c), nil
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/dritelabs/accounts/internal/gapi"
 	"github.com/dritelabs/accounts/internal/logger"
 	pb "github.com/dritelabs/accounts/internal/proto"
+	"github.com/dritelabs/accounts/internal/token"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -16,7 +17,6 @@ import (
 )
 
 func main() {
-
 	conf, err := config.LoadConfig(".")
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to load config")
@@ -41,13 +41,25 @@ func main() {
 		log.Fatal().Err(err).Msg("Failed to connect database")
 	}
 
-	database.AutoMigrate(store)
+	tokenMaker := token.NewTokenMaker(&token.NewTokenMakerConfig{
+		PrivateKey: privateKey,
+		Jwks:       jwks,
+	})
+
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to connect database")
+	}
+
+	if conf.Environment == "development" {
+		database.AutoMigrate(store)
+	}
 
 	accountServerConfig := &gapi.AccountServerConfig{
 		Config:     conf,
 		Store:      store,
 		Jwks:       jwks,
 		PrivateKey: privateKey,
+		TokenMaker: tokenMaker,
 	}
 
 	grpcLogger := grpc.UnaryInterceptor(logger.GrpcLogger)

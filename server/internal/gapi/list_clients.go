@@ -18,7 +18,7 @@ func (s *AccountServer) ListClients(ctx context.Context, req *pb.ListClientsRequ
 
 	var clients []models.Client
 
-	if err := s.Store.Limit(10).Find(&clients).Error; err != nil {
+	if err := s.store.Limit(10).Find(&clients).Error; err != nil {
 		log.Error().Msgf("failed to fetch client: %s", err)
 
 		if errors.Is(err, gorm.ErrRecordNotFound) {

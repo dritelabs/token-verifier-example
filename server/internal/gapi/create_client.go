@@ -11,7 +11,6 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"gorm.io/datatypes"
 )
 
 func (s *AccountServer) CreateClient(ctx context.Context, req *pb.CreateClientRequest) (*pb.Client, error) {
@@ -22,10 +21,9 @@ func (s *AccountServer) CreateClient(ctx context.Context, req *pb.CreateClientRe
 	c := models.Client{
 		UserID:                   "lro0Xq4i3JXN1xo_z3EzW",
 		Description:              req.GetDescription(),
-		GrantTypes:               []string{},
+		GrantTypes:               []string{pb.GrantType_name[int32(pb.GrantType_AUTHORIZATION_CODE)]},
 		IsFirstParty:             false,
 		Name:                     req.GetName(),
-		PolicyUri:                datatypes.URL{},
 		PublicKeysConfiguration:  pb.PublicKeysConfiguration_name[int32(pb.PublicKeysConfiguration_REMOTE)],
 		RedirectUris:             req.RedirectUris,
 		ResponseTypes:            []string{pb.ResponseType_name[int32(pb.ResponseType_CODE)]},
@@ -35,7 +33,7 @@ func (s *AccountServer) CreateClient(ctx context.Context, req *pb.CreateClientRe
 		Type:                     pb.ApplicationType_name[int32(req.GetType())],
 	}
 
-	if err := s.Store.Debug().Create(&c).Error; err != nil {
+	if err := s.store.Create(&c).Error; err != nil {
 		log.Error().Msgf("failed to create client: %s", err)
 
 		if strings.Contains(err.Error(), "unique constraint") {
@@ -45,5 +43,5 @@ func (s *AccountServer) CreateClient(ctx context.Context, req *pb.CreateClientRe
 		return nil, status.Errorf(codes.Internal, "failed to create client:", err)
 	}
 
-	return serializer.SerializeClientModelToClientMessage(c), nil
+	return serializer.SerializeClientModelToClientMessage(&c), nil
 }

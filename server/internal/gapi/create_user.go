@@ -2,6 +2,7 @@ package gapi
 
 import (
 	"context"
+	"database/sql"
 	"strings"
 
 	"github.com/dritelabs/accounts/internal/crypto"
@@ -22,18 +23,16 @@ func (s *AccountServer) CreateUser(ctx context.Context, req *pb.CreateUserReques
 		return nil, status.Errorf(codes.Internal, "failed to hash password: %s", err)
 	}
 
-	p := models.Profile{
-		GivenName:  req.GetGivenName(),
-		MiddleName: req.GetMiddleName(),
-	}
-
 	u := models.User{
-		Email:    req.GetEmail(),
+		Email:    sql.NullString{Valid: true, String: req.GetEmail()},
 		Password: hash,
-		Profile:  &p,
+		Profile: &models.Profile{
+			GivenName:  sql.NullString{Valid: true, String: req.GetGivenName()},
+			MiddleName: sql.NullString{Valid: true, String: req.GetMiddleName()},
+		},
 	}
 
-	if err := s.Store.Create(&u).Error; err != nil {
+	if err := s.store.Create(&u).Error; err != nil {
 		log.Error().Msgf("failed to create user: %s", err)
 
 		if strings.Contains(err.Error(), "unique constraint") {

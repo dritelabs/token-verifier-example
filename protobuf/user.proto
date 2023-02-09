@@ -48,23 +48,15 @@ message CreateUserRequest {
 
 message DeleteUserRequest {
   optional string id = 1;
-  optional string email = 2;
-  optional string username = 3;
 }
 
 message GetUserRequest {
   optional string id = 1;
-  optional string email = 2;
-  optional string username = 3;
 }
 
-message GetUsersRequest {}
+message ListUsersRequest {}
 
-message UserResponse {
-  User user = 1;
-}
-
-message UsersResponse {
+message ListUsersResponse {
   repeated User users = 1;
 }
 
@@ -74,4 +66,5 @@ message UpdateUserRequest {
   optional string password = 3;
   optional string phone_number = 4;
   optional string username = 5;
+  optional UpdateProfileRequest profile = 6;
 }

@@ -9,7 +9,11 @@ import (
 
 type AccountServer struct {
 	pb.UnimplementedAccountServer
-	AccountServerConfig
+	config     config.Config
+	store      *gorm.DB
+	jwks       string
+	privateKey string
+	tokenMaker *token.TokenMaker
 }
 
 type AccountServerConfig struct {
@@ -17,17 +21,15 @@ type AccountServerConfig struct {
 	Store      *gorm.DB
 	Jwks       string
 	PrivateKey string
-	TokenMaker token.TokenMaker
+	TokenMaker *token.TokenMaker
 }
 
 func NewServer(c *AccountServerConfig) *AccountServer {
 	return &AccountServer{
-		AccountServerConfig: AccountServerConfig{
-			Config:     c.Config,
-			Store:      c.Store,
-			Jwks:       c.Jwks,
-			PrivateKey: c.PrivateKey,
-			TokenMaker: c.TokenMaker,
-		},
+		config:     c.Config,
+		store:      c.Store,
+		jwks:       c.Jwks,
+		privateKey: c.PrivateKey,
+		tokenMaker: c.TokenMaker,
 	}
 }

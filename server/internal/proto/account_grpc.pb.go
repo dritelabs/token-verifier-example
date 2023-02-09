@@ -31,11 +31,15 @@ type AccountClient interface {
 	CreateClient(ctx context.Context, in *CreateClientRequest, opts ...grpc.CallOption) (*Client, error)
 	// rpc CreateToken(CreateTokenRequest) returns (TokenResponse);
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*User, error)
-	// rpc DeleteClient (DeleteClientRequest) returns (ClientResponse);
+	DeleteClient(ctx context.Context, in *DeleteClientRequest, opts ...grpc.CallOption) (*Client, error)
 	// rpc DeleteUser (DeleteUserRequest) returns (UserResponse);
 	GetClient(ctx context.Context, in *GetClientRequest, opts ...grpc.CallOption) (*Client, error)
-	ListClients(ctx context.Context, in *ListClientsRequest, opts ...grpc.CallOption) (*ListClientsResponse, error)
 	GetJwks(ctx context.Context, in *GetJwksRequest, opts ...grpc.CallOption) (*anypb.Any, error)
+	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*User, error)
+	ListClients(ctx context.Context, in *ListClientsRequest, opts ...grpc.CallOption) (*ListClientsResponse, error)
+	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	// rpc UpdateClient (UpdateClientRequest) returns (ClientResponse);
+	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*User, error)
 }
 
 type accountClient struct {
@@ -73,9 +77,36 @@ func (c *accountClient) CreateUser(ctx context.Context, in *CreateUserRequest, o
 	return out, nil
 }
 
+func (c *accountClient) DeleteClient(ctx context.Context, in *DeleteClientRequest, opts ...grpc.CallOption) (*Client, error) {
+	out := new(Client)
+	err := c.cc.Invoke(ctx, "/pb.Account/DeleteClient", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *accountClient) GetClient(ctx context.Context, in *GetClientRequest, opts ...grpc.CallOption) (*Client, error) {
 	out := new(Client)
 	err := c.cc.Invoke(ctx, "/pb.Account/GetClient", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountClient) GetJwks(ctx context.Context, in *GetJwksRequest, opts ...grpc.CallOption) (*anypb.Any, error) {
+	out := new(anypb.Any)
+	err := c.cc.Invoke(ctx, "/pb.Account/GetJwks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
+	err := c.cc.Invoke(ctx, "/pb.Account/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,9 +122,18 @@ func (c *accountClient) ListClients(ctx context.Context, in *ListClientsRequest,
 	return out, nil
 }
 
-func (c *accountClient) GetJwks(ctx context.Context, in *GetJwksRequest, opts ...grpc.CallOption) (*anypb.Any, error) {
-	out := new(anypb.Any)
-	err := c.cc.Invoke(ctx, "/pb.Account/GetJwks", in, out, opts...)
+func (c *accountClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error) {
+	out := new(ListUsersResponse)
+	err := c.cc.Invoke(ctx, "/pb.Account/ListUsers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
+	err := c.cc.Invoke(ctx, "/pb.Account/UpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,11 +152,15 @@ type AccountServer interface {
 	CreateClient(context.Context, *CreateClientRequest) (*Client, error)
 	// rpc CreateToken(CreateTokenRequest) returns (TokenResponse);
 	CreateUser(context.Context, *CreateUserRequest) (*User, error)
-	// rpc DeleteClient (DeleteClientRequest) returns (ClientResponse);
+	DeleteClient(context.Context, *DeleteClientRequest) (*Client, error)
 	// rpc DeleteUser (DeleteUserRequest) returns (UserResponse);
 	GetClient(context.Context, *GetClientRequest) (*Client, error)
-	ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error)
 	GetJwks(context.Context, *GetJwksRequest) (*anypb.Any, error)
+	GetUser(context.Context, *GetUserRequest) (*User, error)
+	ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error)
+	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	// rpc UpdateClient (UpdateClientRequest) returns (ClientResponse);
+	UpdateUser(context.Context, *UpdateUserRequest) (*User, error)
 	mustEmbedUnimplementedAccountServer()
 }
 
@@ -133,14 +177,26 @@ func (UnimplementedAccountServer) CreateClient(context.Context, *CreateClientReq
 func (UnimplementedAccountServer) CreateUser(context.Context, *CreateUserRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
+func (UnimplementedAccountServer) DeleteClient(context.Context, *DeleteClientRequest) (*Client, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteClient not implemented")
+}
 func (UnimplementedAccountServer) GetClient(context.Context, *GetClientRequest) (*Client, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClient not implemented")
+}
+func (UnimplementedAccountServer) GetJwks(context.Context, *GetJwksRequest) (*anypb.Any, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJwks not implemented")
+}
+func (UnimplementedAccountServer) GetUser(context.Context, *GetUserRequest) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
 func (UnimplementedAccountServer) ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListClients not implemented")
 }
-func (UnimplementedAccountServer) GetJwks(context.Context, *GetJwksRequest) (*anypb.Any, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetJwks not implemented")
+func (UnimplementedAccountServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedAccountServer) UpdateUser(context.Context, *UpdateUserRequest) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 func (UnimplementedAccountServer) mustEmbedUnimplementedAccountServer() {}
 
@@ -209,6 +265,24 @@ func _Account_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Account_DeleteClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteClientRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).DeleteClient(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Account/DeleteClient",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).DeleteClient(ctx, req.(*DeleteClientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Account_GetClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetClientRequest)
 	if err := dec(in); err != nil {
@@ -223,6 +297,42 @@ func _Account_GetClient_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AccountServer).GetClient(ctx, req.(*GetClientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Account_GetJwks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetJwksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).GetJwks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Account/GetJwks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).GetJwks(ctx, req.(*GetJwksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Account_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).GetUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Account/GetUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).GetUser(ctx, req.(*GetUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -245,20 +355,38 @@ func _Account_ListClients_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Account_GetJwks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetJwksRequest)
+func _Account_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUsersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServer).GetJwks(ctx, in)
+		return srv.(AccountServer).ListUsers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Account/GetJwks",
+		FullMethod: "/pb.Account/ListUsers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).GetJwks(ctx, req.(*GetJwksRequest))
+		return srv.(AccountServer).ListUsers(ctx, req.(*ListUsersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Account_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Account/UpdateUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).UpdateUser(ctx, req.(*UpdateUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -283,16 +411,32 @@ var Account_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Account_CreateUser_Handler,
 		},
 		{
+			MethodName: "DeleteClient",
+			Handler:    _Account_DeleteClient_Handler,
+		},
+		{
 			MethodName: "GetClient",
 			Handler:    _Account_GetClient_Handler,
+		},
+		{
+			MethodName: "GetJwks",
+			Handler:    _Account_GetJwks_Handler,
+		},
+		{
+			MethodName: "GetUser",
+			Handler:    _Account_GetUser_Handler,
 		},
 		{
 			MethodName: "ListClients",
 			Handler:    _Account_ListClients_Handler,
 		},
 		{
-			MethodName: "GetJwks",
-			Handler:    _Account_GetJwks_Handler,
+			MethodName: "ListUsers",
+			Handler:    _Account_ListUsers_Handler,
+		},
+		{
+			MethodName: "UpdateUser",
+			Handler:    _Account_UpdateUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

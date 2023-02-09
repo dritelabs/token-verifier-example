@@ -15,7 +15,7 @@ type User struct {
 	Addresses                []Address
 	Approvals                []*Approval `gorm:"many2many:user_approvals;"`
 	Clients                  []Client
-	Email                    string `gorm:"uniqueIndex"`
+	Email                    sql.NullString `gorm:"uniqueIndex"`
 	EmailVerified            bool
 	Password                 string
 	PhoneNumber              sql.NullString `gorm:"uniqueIndex"`

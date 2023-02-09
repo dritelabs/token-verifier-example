@@ -8,10 +8,13 @@ import (
 )
 
 type Config struct {
-	DBSource          string `mapstructure:"DB_SOURCE"`
-	Environment       string `mapstructure:"ENVIRONMENT"`
-	GRPCServerAddress string `mapstructure:"GRPC_SERVER_ADDRESS"`
-	HTTPServerAddress string `mapstructure:"HTTP_SERVER_ADDRESS"`
+	DBSource                        string `mapstructure:"DB_SOURCE"`
+	Environment                     string `mapstructure:"ENVIRONMENT"`
+	GRPCServerAddress               string `mapstructure:"GRPC_SERVER_ADDRESS"`
+	HTTPServerAddress               string `mapstructure:"HTTP_SERVER_ADDRESS"`
+	AuthorizationCodeExpirationTime int32  `mapstructure:"AUTHORIZATION_CODE_EXPIRATION_TIME"`
+	AccessTokenExpirationTime       int32  `mapstructure:"ACCESS_TOKEN_EXPIRATION_TIME"`
+	RefreshTokenExpirationTime      int32  `mapstructure:"REFRESH_TOKEN_EXPIRATION_TIME"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
