@@ -9,6 +9,7 @@ import (
 	"github.com/dritelabs/accounts/internal/gapi"
 	"github.com/dritelabs/accounts/internal/logger"
 	pb "github.com/dritelabs/accounts/internal/proto"
+	"github.com/dritelabs/accounts/internal/repository"
 	"github.com/dritelabs/accounts/internal/token"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -46,20 +47,25 @@ func main() {
 		Jwks:       jwks,
 	})
 
-	if err != nil {
-		log.Fatal().Err(err).Msg("Failed to connect database")
-	}
+	userRepository := repository.NewUserRepository(&repository.NewUserRepositoryConfig{
+		Config:     conf,
+		Store:      store,
+		TokenMaker: tokenMaker,
+	})
 
 	if conf.Environment == "development" {
-		database.AutoMigrate(store)
+		if err := database.AutoMigrate(store); err != nil {
+			log.Fatal().Err(err).Msg("Failed to connect database")
+		}
 	}
 
 	accountServerConfig := &gapi.AccountServerConfig{
-		Config:     conf,
-		Store:      store,
-		Jwks:       jwks,
-		PrivateKey: privateKey,
-		TokenMaker: tokenMaker,
+		Config:         conf,
+		Store:          store,
+		Jwks:           jwks,
+		PrivateKey:     privateKey,
+		TokenMaker:     tokenMaker,
+		UserRepository: userRepository,
 	}
 
 	grpcLogger := grpc.UnaryInterceptor(logger.GrpcLogger)
