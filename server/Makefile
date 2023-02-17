@@ -1,9 +1,7 @@
 DB_URL=postgresql://drite:drite@localhost:5432/accounts?sslmode=disable
 
 protoc:
-	protoc --proto_path=../protobuf --go_out=internal/proto --go_opt=paths=source_relative \
-    --go-grpc_out=internal/proto --go-grpc_opt=paths=source_relative \
-    ../protobuf/*.proto
+	buf generate ../protobuf
 
 server:
 	reflex -c "reflex.conf"

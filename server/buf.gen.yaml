@@ -1,0 +1,12 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/dritelabs/accounts/pb
+plugins:
+  - plugin: buf.build/protocolbuffers/go
+    out: internal/proto
+    opt: paths=source_relative
+  - plugin: buf.build/grpc/go
+    out: internal/proto
+    opt: paths=source_relative

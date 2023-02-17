@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package pb;
 
-import "code_challenge_method.proto";
-import "client.proto";
-import "scope.proto";
+ import "code_challenge_method.proto";
+ import "client.proto";
+ import "scope.proto";
 
-option go_package = "github.com/dritelabs/accounts/pb";
+ 
 
 message AuthorizationRequest {
   string client_id = 1;

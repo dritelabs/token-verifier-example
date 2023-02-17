@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package pb;
 
-import "grant_type.proto";
+ import "grant_type.proto";
 
-option go_package = "github.com/dritelabs/accounts/pb";
+ 
 
 message TokenRequest {
   message AuthorizationCodeGrant {

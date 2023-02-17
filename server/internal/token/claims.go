@@ -5,5 +5,6 @@ import (
 )
 
 type Claims struct {
+	Test string
 	jwt.RegisteredClaims
 }

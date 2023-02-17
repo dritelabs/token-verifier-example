@@ -4,15 +4,15 @@ package pb;
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/any.proto";
-import "application_type.proto";
-import "client_approval.proto";
-import "grant_type.proto";
-import "public_keys_configuration.proto";
-import "refresh_token_rotation_type.proto";
-import "response_type.proto";
-import "token_endpoint_auth_method.proto";
+ import "application_type.proto";
+ import "client_approval.proto";
+ import "grant_type.proto";
+ import "public_keys_configuration.proto";
+ import "refresh_token_rotation_type.proto";
+ import "response_type.proto";
+ import "token_endpoint_auth_method.proto";
 
-option go_package = "github.com/dritelabs/accounts/pb";
+ 
 
 message Client {
   string id = 1;

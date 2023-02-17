@@ -3,11 +3,11 @@ syntax = "proto3";
 package pb;
 
 import "google/protobuf/timestamp.proto";
-import "profile.proto";
-import "client.proto";
-import "client_approval.proto";
+ import "profile.proto";
+ import "client.proto";
+ import "client_approval.proto";
 
-option go_package = "github.com/dritelabs/accounts/pb";
+ 
 
 message User {
   string id = 1;

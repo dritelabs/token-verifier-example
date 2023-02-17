@@ -27,6 +27,7 @@ type UserRepository struct {
 type AuthenticateResponse struct {
 	AccessToken  string
 	RefreshToken string
+	IdToken      string
 }
 
 type NewUserRepositoryConfig struct {
@@ -104,8 +105,30 @@ func (r *UserRepository) Authenticate(email, password string) (*AuthenticateResp
 		return nil, err
 	}
 
+	idToken, err := r.tokenMaker.SignToken(token.SignTokenConfig{
+		Claims: &token.Claims{
+			RegisteredClaims: jwt.RegisteredClaims{
+				Issuer:    "http://localhost:3000",
+				Subject:   "",
+				Audience:  []string{},
+				ExpiresAt: &jwt.NumericDate{Time: time.Now().Add(time.Millisecond * time.Duration(r.config.RefreshTokenExpirationTime))},
+				NotBefore: &jwt.NumericDate{},
+				IssuedAt:  &jwt.NumericDate{Time: time.Now()},
+				ID:        "",
+			},
+		},
+		Headers: &token.Headers{
+			Typ: "rt+jwt",
+		},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
 	return &AuthenticateResponse{
 		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
+		IdToken:      idToken,
 	}, nil
 }

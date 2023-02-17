@@ -25,9 +25,18 @@ func (s *AccountServer) UpdateUser(ctx context.Context, req *pb.UpdateUserReques
 	fmt.Print(req.GetProfile().GetGivenName())
 
 	updateUserArg := models.User{
-		Email:       sql.NullString{Valid: req.Email != nil && len(*req.Email) != 0, String: req.GetEmail()},
-		Username:    sql.NullString{Valid: req.Username != nil && len(*req.Username) != 0, String: req.GetUsername()},
-		PhoneNumber: sql.NullString{Valid: req.PhoneNumber != nil && len(*req.PhoneNumber) != 0, String: req.GetPhoneNumber()},
+		Email: sql.NullString{
+			Valid:  req.Email != nil && len(*req.Email) != 0,
+			String: req.GetEmail(),
+		},
+		Username: sql.NullString{
+			Valid:  req.Username != nil && len(*req.Username) != 0,
+			String: req.GetUsername(),
+		},
+		PhoneNumber: sql.NullString{
+			Valid:  req.PhoneNumber != nil && len(*req.PhoneNumber) != 0,
+			String: req.GetPhoneNumber(),
+		},
 	}
 
 	if req.Password != nil && len(*req.Password) != 0 {
