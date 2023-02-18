@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/dritelabs/accounts/internal/models"
-	pb "github.com/dritelabs/accounts/internal/proto"
+	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/dritelabs/accounts/internal/serializer"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
@@ -13,7 +13,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *AccountServer) ListClients(ctx context.Context, req *pb.ListClientsRequest) (*pb.ListClientsResponse, error) {
+func (s *AccountServiceServer) ListClients(ctx context.Context, req *pb.ListClientsRequest) (*pb.ListClientsResponse, error) {
 	log.Info().Msgf("fetching clients")
 
 	var clients []models.Client

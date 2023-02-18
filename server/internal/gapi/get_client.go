@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/dritelabs/accounts/internal/models"
-	pb "github.com/dritelabs/accounts/internal/proto"
+	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/dritelabs/accounts/internal/serializer"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
@@ -13,7 +13,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *AccountServer) GetClient(ctx context.Context, req *pb.GetClientRequest) (*pb.Client, error) {
+func (s *AccountServiceServer) GetClient(ctx context.Context, req *pb.GetClientRequest) (*pb.Client, error) {
 	log.Info().Msgf("fetching client with id %s", req.GetId())
 
 	c := models.Client{}

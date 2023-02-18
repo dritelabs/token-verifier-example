@@ -2,14 +2,14 @@ package gapi
 
 import (
 	"github.com/dritelabs/accounts/internal/config"
-	pb "github.com/dritelabs/accounts/internal/proto"
+	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/dritelabs/accounts/internal/repository"
 	"github.com/dritelabs/accounts/internal/token"
 	"gorm.io/gorm"
 )
 
-type AccountServer struct {
-	pb.UnimplementedAccountServer
+type AccountServiceServer struct {
+	pb.UnimplementedAccountServiceServer
 	config         config.Config
 	store          *gorm.DB
 	jwks           string
@@ -18,7 +18,7 @@ type AccountServer struct {
 	userRepository *repository.UserRepository
 }
 
-type AccountServerConfig struct {
+type AccountServiceServerConfig struct {
 	Config         config.Config
 	Store          *gorm.DB
 	Jwks           string
@@ -27,8 +27,8 @@ type AccountServerConfig struct {
 	UserRepository *repository.UserRepository
 }
 
-func NewServer(c *AccountServerConfig) *AccountServer {
-	return &AccountServer{
+func NewServer(c *AccountServiceServerConfig) *AccountServiceServer {
+	return &AccountServiceServer{
 		config:         c.Config,
 		store:          c.Store,
 		jwks:           c.Jwks,

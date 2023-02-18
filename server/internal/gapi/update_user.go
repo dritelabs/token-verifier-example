@@ -8,7 +8,7 @@ import (
 
 	"github.com/dritelabs/accounts/internal/crypto"
 	"github.com/dritelabs/accounts/internal/models"
-	pb "github.com/dritelabs/accounts/internal/proto"
+	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/dritelabs/accounts/internal/serializer"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
@@ -16,7 +16,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *AccountServer) UpdateUser(ctx context.Context, req *pb.UpdateUserRequest) (*pb.User, error) {
+func (s *AccountServiceServer) UpdateUser(ctx context.Context, req *pb.UpdateUserRequest) (*pb.User, error) {
 	log.Info().Msgf("fetching user with id %s", req.GetId())
 
 	u := models.User{}

@@ -1,7 +1,7 @@
 DB_URL=postgresql://drite:drite@localhost:5432/accounts?sslmode=disable
 
 protoc:
-	buf generate ../protobuf
+	buf generate https://github.com/dritelabs/driteapis.git#branch=main,subdir=account
 
 server:
 	reflex -c "reflex.conf"

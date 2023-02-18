@@ -5,15 +5,15 @@ import (
 	"errors"
 
 	"github.com/dritelabs/accounts/internal/models"
-	pb "github.com/dritelabs/accounts/internal/proto"
-	"github.com/dritelabs/accounts/internal/serializer"
+	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 	"gorm.io/gorm"
 )
 
-func (s *AccountServer) DeleteClient(ctx context.Context, req *pb.DeleteClientRequest) (*pb.Client, error) {
+func (s *AccountServiceServer) DeleteClient(ctx context.Context, req *pb.DeleteClientRequest) (*emptypb.Empty, error) {
 	log.Info().Msgf("fetching user with id %s", req.GetId())
 
 	c := &models.Client{}
@@ -28,7 +28,5 @@ func (s *AccountServer) DeleteClient(ctx context.Context, req *pb.DeleteClientRe
 		return nil, status.Errorf(codes.Internal, "clint not found")
 	}
 
-	c.ID = req.GetId()
-
-	return serializer.SerializeClientModelToClientMessage(c), nil
+	return &emptypb.Empty{}, nil
 }

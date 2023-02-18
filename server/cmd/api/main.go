@@ -8,7 +8,7 @@ import (
 	"github.com/dritelabs/accounts/internal/database"
 	"github.com/dritelabs/accounts/internal/gapi"
 	"github.com/dritelabs/accounts/internal/logger"
-	pb "github.com/dritelabs/accounts/internal/proto"
+	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/dritelabs/accounts/internal/repository"
 	"github.com/dritelabs/accounts/internal/token"
 	"github.com/rs/zerolog"
@@ -59,7 +59,7 @@ func main() {
 		}
 	}
 
-	accountServerConfig := &gapi.AccountServerConfig{
+	accountServiceServerConfig := &gapi.AccountServiceServerConfig{
 		Config:         conf,
 		Store:          store,
 		Jwks:           jwks,
@@ -70,9 +70,9 @@ func main() {
 
 	grpcLogger := grpc.UnaryInterceptor(logger.GrpcLogger)
 	grpcServer := grpc.NewServer(grpcLogger)
-	accountServer := gapi.NewServer(accountServerConfig)
+	accountServiceServer := gapi.NewServer(accountServiceServerConfig)
 
-	pb.RegisterAccountServer(grpcServer, accountServer)
+	pb.RegisterAccountServiceServer(grpcServer, accountServiceServer)
 	reflection.Register(grpcServer)
 
 	listener, err := net.Listen("tcp", conf.GRPCServerAddress)

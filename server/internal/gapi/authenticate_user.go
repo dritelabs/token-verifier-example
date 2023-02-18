@@ -4,14 +4,14 @@ import (
 	"context"
 	"errors"
 
-	pb "github.com/dritelabs/accounts/internal/proto"
+	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/dritelabs/accounts/internal/repository"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (s *AccountServer) AuthenticateUser(ctx context.Context, req *pb.AuthenticateUserRequest) (*pb.AuthenticateUserResponse, error) {
+func (s *AccountServiceServer) AuthenticateUser(ctx context.Context, req *pb.AuthenticateUserRequest) (*pb.AuthenticateUserResponse, error) {
 	log.Info().Msgf("authenticating user with email %s", req.GetEmail())
 
 	res, err := s.userRepository.Authenticate(req.GetEmail(), req.GetPassword())
