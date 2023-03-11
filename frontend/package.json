@@ -9,7 +9,8 @@
     "protoc": "scripts/build-proto.sh"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.7.3",
+    "@bufbuild/protobuf": "^1.1.0",
+    "@grpc/grpc-js": "^1.8.12",
     "@mdi/font": "^7.1.96",
     "google-protobuf": "^3.21.2",
     "lodash": "^4.17.21",
@@ -18,6 +19,8 @@
   "devDependencies": {
     "@types/google-protobuf": "^3.15.6",
     "@types/lodash": "^4.14.191",
-    "nuxt": "3.2.2"
+    "grpc_tools_node_protoc_ts": "^5.3.3",
+    "grpc-tools": "^1.12.4",
+    "nuxt": "3.2.3"
   }
 }

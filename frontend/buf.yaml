@@ -1,0 +1,13 @@
+version: v1
+
+build:
+  roots:
+    - .
+
+lint:
+  use:
+    - DEFAULT # the current strictest possible
+
+breaking:
+  use:
+    - WIRE_JSON
