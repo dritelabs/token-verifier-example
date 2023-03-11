@@ -4,8 +4,14 @@ interface DefineUseCase {
   userRepository: UserRepository;
 }
 
+interface GetUserInfoInput {
+  userId: string;
+}
+
 export function defineUseCase({ userRepository }: DefineUseCase) {
-  return async function registerUser() {
-    throw new Error("No implemented");
+  return async function getUserProfile(input: GetUserInfoInput) {
+    return userRepository.get({
+      id: input.userId,
+    });
   };
 }

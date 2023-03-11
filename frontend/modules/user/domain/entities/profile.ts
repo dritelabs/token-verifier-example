@@ -1,0 +1,3 @@
+interface Profile {
+  givenName?: string;
+}

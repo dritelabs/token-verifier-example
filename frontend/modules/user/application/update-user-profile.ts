@@ -5,7 +5,7 @@ interface DefineUseCase {
 }
 
 export function defineUseCase({ userRepository }: DefineUseCase) {
-  return async function registerUser() {
+  return async function updateUserProfile() {
     throw new Error("No implemented");
   };
 }
