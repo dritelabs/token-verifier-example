@@ -1,4 +1,4 @@
-import { UserRepository } from "../domain/repositories/user-repository";
+import { UserRepository } from "../../domain/repositories/user-repository";
 
 interface DefineUseCase {
   userRepository: UserRepository;
@@ -10,7 +10,7 @@ interface ChangePasswordInput {
   nextPassword: string;
 }
 
-export function defineUseCase({ userRepository }: DefineUseCase) {
+export function defineChangePassword({ userRepository }: DefineUseCase) {
   return async function changePassword(input: ChangePasswordInput) {
     return userRepository.update({
       id: input.userId,
