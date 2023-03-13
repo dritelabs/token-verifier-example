@@ -15,7 +15,9 @@ interface DefineGRPCUserRepository {
   oauthSerializer: OAuthSerializer;
 }
 
-export function defineGRPCUserRepository({}: DefineGRPCUserRepository): OAuthRepository {
+export function defineGRPCOAuthRepository(
+  _: DefineGRPCUserRepository
+): OAuthRepository {
   return {
     async authorize() {
       const request = new AuthorizationRequest();

@@ -1,5 +1,5 @@
 import { H3Event } from "h3";
-import { UserUserCases } from "../../application/use-cases";
+import { UserUserCases } from "../../../application/use-cases";
 
 interface DefineUserController {
   userUserCases: UserUserCases;

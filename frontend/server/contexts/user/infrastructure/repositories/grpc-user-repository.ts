@@ -20,35 +20,35 @@ export function defineGRPCUserRepository({
   userSerializer,
 }: DefineGRPCUserRepository): UserRepository {
   return {
-    async create(entity) {
+    async create(input) {
       const request = new CreateUserRequest();
       const metadata = new Metadata();
       const response = await createUser(request, metadata);
 
       return userSerializer.serializeToEntity(response);
     },
-    async delete(entity) {
+    async delete(input) {
       const request = new DeleteUserRequest();
       const metadata = new Metadata();
       await deleteUser(request, metadata);
 
       return;
     },
-    async get(entity) {
+    async get(input) {
       const request = new GetUserRequest();
       const metadata = new Metadata();
       const response = await getUser(request, metadata);
 
       return userSerializer.serializeToEntity(response);
     },
-    async query(entity) {
+    async query(input) {
       const request = new GetUserRequest();
       const metadata = new Metadata();
       const response = await getUser(request, metadata);
 
       return userSerializer.serializeToEntity(response);
     },
-    async update(entity) {
+    async update(input) {
       const request = new UpdateUserRequest();
       const metadata = new Metadata();
       const response = await updateUser(request, metadata);

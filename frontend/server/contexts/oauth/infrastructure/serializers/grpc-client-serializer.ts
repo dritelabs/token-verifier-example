@@ -1,7 +1,7 @@
-import { User as UserMessage } from "~~/server/contexts/shared/infrastructure/proto/drite/account/v1/user_pb";
-import { UserSerializer } from "../../domain/serializers/oauth-serializer";
+import { Client } from "~/server/contexts/shared/infrastructure/proto/drite/account/v1/client_pb";
+import { ClientSerializer } from "~/server/contexts/oauth/domain/serializers/client-serializer";
 
-export function defineGRPCUserSerializer(): UserSerializer<UserMessage> {
+export function defineGRPCClientSerializer(): ClientSerializer<Client> {
   return {
     serializeToEntity(input) {
       return {
