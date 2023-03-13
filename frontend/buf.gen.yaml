@@ -3,34 +3,34 @@ managed:
   enabled: true
 plugins:
   - plugin: buf.build/grpc/node
-    out: server/proto
+    out: server/contexts/shared/infrastructure/proto
     opt: grpc_js
   - plugin: buf.build/protocolbuffers/js
-    out: server/proto
+    out: server/contexts/shared/infrastructure/proto
     opt: import_style=commonjs,binary
   - name: ts
-    out: server/proto
+    out: server/contexts/shared/infrastructure/proto
     opt: grpc_js
     
 
   # - plugin: buf.build/bufbuild/es
-  #   out: server/proto
+  #   out: server/contexts/shared/infrastructure/proto
   #   opt: target=ts
 
 
   # - name: grpc
-  #   out: server/proto
+  #   out: server/contexts/shared/infrastructure/proto
   #   opt: grpc_js
   #   path: node_modules/.bin/grpc_tools_node_protoc_plugin
 
 
   # - plugin: buf.build/community/stephenh-ts-proto
-  #   out: server/proto
+  #   out: server/contexts/shared/infrastructure/proto
 
 
   # - plugin: buf.build/bufbuild/connect-es
-  #   out: server/proto
+  #   out: server/contexts/shared/infrastructure/proto
   #   opt: target=ts
   # - plugin: buf.build/bufbuild/es
-  #   out: server/proto
+  #   out: server/contexts/shared/infrastructure/proto
   #   opt: target=ts
