@@ -1,1 +1,4 @@
-export interface AuthorizeResponse {}
+export interface AuthorizeResponse {
+  client: any;
+  scopes: any[];
+}
