@@ -1,4 +1,5 @@
 export interface AuthorizationRequest {
+  audience: string[];
   clientId: string;
   codeChallenge: string;
   codeChallengeMethod?: string;

@@ -3,13 +3,12 @@ import { Metadata } from "@grpc/grpc-js";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { accountClient } from "~~/server/contexts/shared/infrastructure/account-client";
 import {
+  Client as ClientMessage,
   CreateClientRequest,
   DeleteClientRequest,
   GetClientRequest,
-  // UpdateClientRequest,
-  Client as ClientMessage,
+  UpdateClientRequest,
 } from "~~/server/contexts/shared/infrastructure/proto/drite/account/v1/client_pb";
-import { UserRepository } from "~~/server/contexts/user/domain/repositories/user-repository";
 import { ClientSerializer } from "../../domain/serializers/client-serializer";
 import { ClientRepository } from "../../domain/repositories/client-repository";
 
@@ -50,7 +49,11 @@ export function defineGRPCUserRepository({
       return clientSerializer.serializeToEntity(response);
     },
     async update(entity) {
-      throw new Error("Not implemented");
+      const request = new UpdateClientRequest();
+      const metadata = new Metadata();
+      const response = await updateClient(request, metadata);
+
+      return clientSerializer.serializeToEntity(response);
     },
   };
 }
@@ -67,6 +70,6 @@ const getClient = promisify<GetClientRequest, Metadata, ClientMessage>(
   accountClient.getClient.bind(accountClient)
 );
 
-// const updateClient = promisify<UpdateClientRequest, Metadata, ClientMessage>(
-//   accountClient.updateClient.bind(accountClient)
-// );
+const updateClient = promisify<UpdateClientRequest, Metadata, ClientMessage>(
+  accountClient.updateClient.bind(accountClient)
+);

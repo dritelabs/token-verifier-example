@@ -1,16 +1,16 @@
-import { UserSerializer } from "../../domain/serializers/user-serializer";
 import { promisify } from "node:util";
 import { Metadata } from "@grpc/grpc-js";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
-import { accountClient } from "~~/server/contexts/shared/infrastructure/account-client";
+import { accountClient } from "~/server/contexts/shared/infrastructure/account-client";
 import {
   CreateUserRequest,
   DeleteUserRequest,
   GetUserRequest,
   UpdateUserRequest,
   User as UserMessage,
-} from "~~/server/contexts/shared/infrastructure/proto/drite/account/v1/user_pb";
+} from "~/server/contexts/shared/infrastructure/proto/drite/account/v1/user_pb";
 import { UserRepository } from "~~/server/contexts/user/domain/repositories/user-repository";
+import { UserSerializer } from "~/server/contexts/user/domain/serializers/user-serializer";
 
 interface DefineGRPCUserRepository {
   userSerializer: UserSerializer<UserMessage>;
