@@ -7,7 +7,7 @@ interface DefineUserController {
 
 export type UserController = ReturnType<typeof defineUserController>;
 
-function defineCreateController({ userUserCases }: DefineUserController) {
+function defineCreateUserController({ userUserCases }: DefineUserController) {
   return async function create(event: H3Event) {
     const body = await readBody(event);
     return userUserCases.registerUser();
@@ -15,5 +15,5 @@ function defineCreateController({ userUserCases }: DefineUserController) {
 }
 
 export function defineUserController({ userUserCases }: DefineUserController) {
-  return { create: defineCreateController({ userUserCases }) };
+  return { create: defineCreateUserController({ userUserCases }) };
 }
