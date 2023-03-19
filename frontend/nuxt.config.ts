@@ -7,4 +7,12 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify"],
   },
+  modules: ["nuxt-iron-session"],
+  session: {
+    cookieName: "yourapp_cookiename",
+    password: "complex_password_at_least_32_characters_long",
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+    },
+  },
 });

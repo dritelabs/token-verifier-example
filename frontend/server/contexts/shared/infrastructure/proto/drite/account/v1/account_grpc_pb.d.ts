@@ -32,14 +32,14 @@ interface IAccountServiceService extends grpc.ServiceDefinition<grpc.UntypedServ
     updateUser: IAccountServiceService_IUpdateUser;
 }
 
-interface IAccountServiceService_IAuthenticateUser extends grpc.MethodDefinition<drite_account_v1_user_pb.AuthenticateUserRequest, drite_account_v1_user_pb.AuthenticateUserResponse> {
+interface IAccountServiceService_IAuthenticateUser extends grpc.MethodDefinition<drite_account_v1_user_pb.AuthenticateUserRequest, drite_account_v1_token_pb.TokenResponse> {
     path: "/drite.account.v1.AccountService/AuthenticateUser";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<drite_account_v1_user_pb.AuthenticateUserRequest>;
     requestDeserialize: grpc.deserialize<drite_account_v1_user_pb.AuthenticateUserRequest>;
-    responseSerialize: grpc.serialize<drite_account_v1_user_pb.AuthenticateUserResponse>;
-    responseDeserialize: grpc.deserialize<drite_account_v1_user_pb.AuthenticateUserResponse>;
+    responseSerialize: grpc.serialize<drite_account_v1_token_pb.TokenResponse>;
+    responseDeserialize: grpc.deserialize<drite_account_v1_token_pb.TokenResponse>;
 }
 interface IAccountServiceService_IAuthorize extends grpc.MethodDefinition<drite_account_v1_authorization_pb.AuthorizationRequest, drite_account_v1_authorization_pb.AuthorizeResponse> {
     path: "/drite.account.v1.AccountService/Authorize";
@@ -171,7 +171,7 @@ interface IAccountServiceService_IUpdateUser extends grpc.MethodDefinition<drite
 export const AccountServiceService: IAccountServiceService;
 
 export interface IAccountServiceServer extends grpc.UntypedServiceImplementation {
-    authenticateUser: grpc.handleUnaryCall<drite_account_v1_user_pb.AuthenticateUserRequest, drite_account_v1_user_pb.AuthenticateUserResponse>;
+    authenticateUser: grpc.handleUnaryCall<drite_account_v1_user_pb.AuthenticateUserRequest, drite_account_v1_token_pb.TokenResponse>;
     authorize: grpc.handleUnaryCall<drite_account_v1_authorization_pb.AuthorizationRequest, drite_account_v1_authorization_pb.AuthorizeResponse>;
     createAuthorization: grpc.handleUnaryCall<drite_account_v1_authorization_pb.AuthorizationRequest, drite_account_v1_authorization_pb.AuthorizationResponse>;
     token: grpc.handleUnaryCall<drite_account_v1_token_pb.TokenRequest, drite_account_v1_token_pb.TokenResponse>;
@@ -189,9 +189,9 @@ export interface IAccountServiceServer extends grpc.UntypedServiceImplementation
 }
 
 export interface IAccountServiceClient {
-    authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, callback: (error: grpc.ServiceError | null, response: drite_account_v1_user_pb.AuthenticateUserResponse) => void): grpc.ClientUnaryCall;
-    authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: drite_account_v1_user_pb.AuthenticateUserResponse) => void): grpc.ClientUnaryCall;
-    authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: drite_account_v1_user_pb.AuthenticateUserResponse) => void): grpc.ClientUnaryCall;
+    authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, callback: (error: grpc.ServiceError | null, response: drite_account_v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
+    authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: drite_account_v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
+    authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: drite_account_v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
     authorize(request: drite_account_v1_authorization_pb.AuthorizationRequest, callback: (error: grpc.ServiceError | null, response: drite_account_v1_authorization_pb.AuthorizeResponse) => void): grpc.ClientUnaryCall;
     authorize(request: drite_account_v1_authorization_pb.AuthorizationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: drite_account_v1_authorization_pb.AuthorizeResponse) => void): grpc.ClientUnaryCall;
     authorize(request: drite_account_v1_authorization_pb.AuthorizationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: drite_account_v1_authorization_pb.AuthorizeResponse) => void): grpc.ClientUnaryCall;
@@ -238,9 +238,9 @@ export interface IAccountServiceClient {
 
 export class AccountServiceClient extends grpc.Client implements IAccountServiceClient {
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: Partial<grpc.ClientOptions>);
-    public authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, callback: (error: grpc.ServiceError | null, response: drite_account_v1_user_pb.AuthenticateUserResponse) => void): grpc.ClientUnaryCall;
-    public authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: drite_account_v1_user_pb.AuthenticateUserResponse) => void): grpc.ClientUnaryCall;
-    public authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: drite_account_v1_user_pb.AuthenticateUserResponse) => void): grpc.ClientUnaryCall;
+    public authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, callback: (error: grpc.ServiceError | null, response: drite_account_v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
+    public authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: drite_account_v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
+    public authenticateUser(request: drite_account_v1_user_pb.AuthenticateUserRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: drite_account_v1_token_pb.TokenResponse) => void): grpc.ClientUnaryCall;
     public authorize(request: drite_account_v1_authorization_pb.AuthorizationRequest, callback: (error: grpc.ServiceError | null, response: drite_account_v1_authorization_pb.AuthorizeResponse) => void): grpc.ClientUnaryCall;
     public authorize(request: drite_account_v1_authorization_pb.AuthorizationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: drite_account_v1_authorization_pb.AuthorizeResponse) => void): grpc.ClientUnaryCall;
     public authorize(request: drite_account_v1_authorization_pb.AuthorizationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: drite_account_v1_authorization_pb.AuthorizeResponse) => void): grpc.ClientUnaryCall;

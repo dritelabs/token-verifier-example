@@ -42,7 +42,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AccountServiceClient interface {
-	AuthenticateUser(ctx context.Context, in *AuthenticateUserRequest, opts ...grpc.CallOption) (*AuthenticateUserResponse, error)
+	AuthenticateUser(ctx context.Context, in *AuthenticateUserRequest, opts ...grpc.CallOption) (*TokenResponse, error)
 	Authorize(ctx context.Context, in *AuthorizationRequest, opts ...grpc.CallOption) (*AuthorizeResponse, error)
 	CreateAuthorization(ctx context.Context, in *AuthorizationRequest, opts ...grpc.CallOption) (*AuthorizationResponse, error)
 	Token(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*TokenResponse, error)
@@ -67,8 +67,8 @@ func NewAccountServiceClient(cc grpc.ClientConnInterface) AccountServiceClient {
 	return &accountServiceClient{cc}
 }
 
-func (c *accountServiceClient) AuthenticateUser(ctx context.Context, in *AuthenticateUserRequest, opts ...grpc.CallOption) (*AuthenticateUserResponse, error) {
-	out := new(AuthenticateUserResponse)
+func (c *accountServiceClient) AuthenticateUser(ctx context.Context, in *AuthenticateUserRequest, opts ...grpc.CallOption) (*TokenResponse, error) {
+	out := new(TokenResponse)
 	err := c.cc.Invoke(ctx, AccountService_AuthenticateUser_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -206,7 +206,7 @@ func (c *accountServiceClient) UpdateUser(ctx context.Context, in *UpdateUserReq
 // All implementations must embed UnimplementedAccountServiceServer
 // for forward compatibility
 type AccountServiceServer interface {
-	AuthenticateUser(context.Context, *AuthenticateUserRequest) (*AuthenticateUserResponse, error)
+	AuthenticateUser(context.Context, *AuthenticateUserRequest) (*TokenResponse, error)
 	Authorize(context.Context, *AuthorizationRequest) (*AuthorizeResponse, error)
 	CreateAuthorization(context.Context, *AuthorizationRequest) (*AuthorizationResponse, error)
 	Token(context.Context, *TokenRequest) (*TokenResponse, error)
@@ -228,7 +228,7 @@ type AccountServiceServer interface {
 type UnimplementedAccountServiceServer struct {
 }
 
-func (UnimplementedAccountServiceServer) AuthenticateUser(context.Context, *AuthenticateUserRequest) (*AuthenticateUserResponse, error) {
+func (UnimplementedAccountServiceServer) AuthenticateUser(context.Context, *AuthenticateUserRequest) (*TokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AuthenticateUser not implemented")
 }
 func (UnimplementedAccountServiceServer) Authorize(context.Context, *AuthorizationRequest) (*AuthorizeResponse, error) {

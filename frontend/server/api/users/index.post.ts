@@ -1,3 +1,3 @@
-import { user } from "~/server/contexts/user/interfaces/nuxt/bootstrap";
+import { createUser } from "~/server/contexts/user/interfaces/nuxt/controllers/user-controller";
 
-export default defineEventHandler(user.controller.create);
+export default defineEventHandler(createUser);

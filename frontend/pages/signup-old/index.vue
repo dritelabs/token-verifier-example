@@ -1,25 +1,19 @@
-<script>
-definePageMeta({
-  layout: "auth",
-});
-</script>
-
 <template>
-  <v-container fluid class="h-100">
-    <v-row class="h-100" align="center" justify="center" no-gutters>
-      <v-col cols="12">
-        <v-card max-width="450" class="pt-12 px-10 pb-9 mx-auto">
-          <div class="d-flex justify-start items-start">
-            <img src="/logo-black.svg" width="90" />
-          </div>
-          <p class="text-h5 mt-8 mb-6">Create your Drite Account</p>
-          <v-row dense>
+  <v-main class="bg-grey-lighten-3">
+    <v-container class="h-100">
+      <v-row class="h-100" align="center" justify="center">
+        <v-col cols="12" sm="6">
+          <v-row>
+            <v-col>
+              <p class="text-h4">Create your Drite Account</p>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col cols="6">
               <v-text-field
                 label="First name"
                 variant="outlined"
                 required
-                density="comfortable"
               ></v-text-field>
             </v-col>
             <v-col cols="6">
@@ -27,28 +21,25 @@ definePageMeta({
                 label="Last name"
                 variant="outlined"
                 required
-                density="comfortable"
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row dense>
+          <v-row>
             <v-col cols="12">
               <v-text-field
                 label="Email"
                 variant="outlined"
                 required
-                density="comfortable"
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row dense>
+          <v-row>
             <v-col cols="6">
               <v-text-field
                 type="password"
                 label="Password"
                 variant="outlined"
                 required
-                density="comfortable"
               ></v-text-field>
             </v-col>
             <v-col cols="6">
@@ -57,16 +48,22 @@ definePageMeta({
                 label="Confirm"
                 variant="outlined"
                 required
-                density="comfortable"
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row dense align="center" justify="space-between" no-gutters>
-            <v-btn color="primary" size="small" variant="text">Sign in</v-btn>
-            <v-btn color="primary" variant="flat">Next</v-btn>
-          </v-row>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+          <NuxtLink to="/signup/step2">
+            <v-btn color="primary" size="large" variant="flat"> Next </v-btn>
+          </NuxtLink>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    links: ["Dashboard", "Messages", "Profile", "Updates"],
+  }),
+};
+</script>

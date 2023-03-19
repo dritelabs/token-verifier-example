@@ -120,29 +120,6 @@ export namespace AuthenticateUserRequest {
     }
 }
 
-export class AuthenticateUserResponse extends jspb.Message { 
-    getAccessToken(): string;
-    setAccessToken(value: string): AuthenticateUserResponse;
-    getRefreshToken(): string;
-    setRefreshToken(value: string): AuthenticateUserResponse;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): AuthenticateUserResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: AuthenticateUserResponse): AuthenticateUserResponse.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: AuthenticateUserResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): AuthenticateUserResponse;
-    static deserializeBinaryFromReader(message: AuthenticateUserResponse, reader: jspb.BinaryReader): AuthenticateUserResponse;
-}
-
-export namespace AuthenticateUserResponse {
-    export type AsObject = {
-        accessToken: string,
-        refreshToken: string,
-    }
-}
-
 export class CreateUserRequest extends jspb.Message { 
     getEmail(): string;
     setEmail(value: string): CreateUserRequest;

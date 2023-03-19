@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *AccountServiceServer) AuthenticateUser(ctx context.Context, req *pb.AuthenticateUserRequest) (*pb.AuthenticateUserResponse, error) {
+func (s *AccountServiceServer) AuthenticateUser(ctx context.Context, req *pb.AuthenticateUserRequest) (*pb.TokenResponse, error) {
 	log.Info().Msgf("authenticating user with email %s", req.GetEmail())
 
 	res, err := s.userRepository.Authenticate(req.GetEmail(), req.GetPassword())
@@ -24,7 +24,7 @@ func (s *AccountServiceServer) AuthenticateUser(ctx context.Context, req *pb.Aut
 		return nil, status.Errorf(codes.Internal, err.Error())
 	}
 
-	return &pb.AuthenticateUserResponse{
+	return &pb.TokenResponse{
 		AccessToken:  res.AccessToken,
 		RefreshToken: res.RefreshToken,
 	}, nil

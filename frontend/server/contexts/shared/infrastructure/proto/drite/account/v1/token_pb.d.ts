@@ -129,14 +129,16 @@ export namespace TokenRequest {
 export class TokenResponse extends jspb.Message { 
     getAccessToken(): string;
     setAccessToken(value: string): TokenResponse;
-    getTokenType(): string;
-    setTokenType(value: string): TokenResponse;
     getExpiresIn(): string;
     setExpiresIn(value: string): TokenResponse;
-    getScope(): string;
-    setScope(value: string): TokenResponse;
+    getIdToken(): string;
+    setIdToken(value: string): TokenResponse;
     getRefreshToken(): string;
     setRefreshToken(value: string): TokenResponse;
+    getScope(): string;
+    setScope(value: string): TokenResponse;
+    getTokenType(): string;
+    setTokenType(value: string): TokenResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TokenResponse.AsObject;
@@ -151,9 +153,10 @@ export class TokenResponse extends jspb.Message {
 export namespace TokenResponse {
     export type AsObject = {
         accessToken: string,
-        tokenType: string,
         expiresIn: string,
-        scope: string,
+        idToken: string,
         refreshToken: string,
+        scope: string,
+        tokenType: string,
     }
 }

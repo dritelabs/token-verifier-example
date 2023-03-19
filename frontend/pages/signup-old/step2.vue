@@ -1,29 +1,22 @@
-<script>
-definePageMeta({
-  layout: "auth",
-});
-</script>
-
 <template>
-  <v-container fluid class="h-100">
-    <v-row class="h-100" align="center" justify="center" no-gutters>
-      <v-col cols="12">
-        <v-card max-width="450" class="pt-12 px-10 pb-9 mx-auto">
-          <div class="d-flex justify-start items-start">
-            <img src="/logo-black.svg" width="90" />
-          </div>
-          <p class="text-h5 mt-8 mb-6">Create your Drite Account</p>
-          <v-row dense>
+  <v-main class="bg-grey-lighten-3">
+    <v-container class="h-100">
+      <v-row class="h-100" align="center" justify="center">
+        <v-col cols="12" sm="6">
+          <p class="text-h4">Welcome back.</p>
+          <p class="text-subtitle-1 mb-6">
+            New to Drite? <a href="">Sign up</a>
+          </p>
+          <v-row>
             <v-col cols="12">
               <v-text-field
                 label="Phone number"
                 variant="outlined"
                 required
-                density="comfortable"
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row dense>
+          <v-row>
             <v-col cols="4">
               <v-select
                 variant="outlined"
@@ -36,7 +29,6 @@ definePageMeta({
                   'Texas',
                   'Wyoming',
                 ]"
-                density="comfortable"
               ></v-select>
             </v-col>
             <v-col cols="4">
@@ -44,7 +36,6 @@ definePageMeta({
                 label="Day"
                 variant="outlined"
                 required
-                density="comfortable"
               ></v-text-field>
             </v-col>
             <v-col cols="4">
@@ -52,26 +43,42 @@ definePageMeta({
                 label="Year"
                 variant="outlined"
                 required
-                density="comfortable"
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row dense>
+          <v-row>
             <v-col cols="12">
               <v-select
                 variant="outlined"
                 label="Gender"
                 :items="['California', 'Colorado', 'Florida']"
-                density="comfortable"
               ></v-select>
             </v-col>
           </v-row>
-          <v-row align="center" justify="space-between" no-gutters>
-            <v-btn color="primary" size="small" variant="text">Back</v-btn>
-            <v-btn color="primary" variant="flat">Log in</v-btn>
+          <v-row>
+            <v-col cols="auto">
+              <!-- <NuxtLink to="/signup"> -->
+              <v-btn color="primary" size="large" variant="plain"> Back </v-btn>
+              <!-- </NuxtLink> -->
+            </v-col>
+            <v-col cols="auto">
+              <NuxtLink to="/signup/step2">
+                <v-btn color="primary" size="large" variant="flat">
+                  Next
+                </v-btn>
+              </NuxtLink>
+            </v-col>
           </v-row>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    links: ["Dashboard", "Messages", "Profile", "Updates"],
+  }),
+};
+</script>

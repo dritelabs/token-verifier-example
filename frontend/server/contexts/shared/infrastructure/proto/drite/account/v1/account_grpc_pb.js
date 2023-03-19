@@ -21,17 +21,6 @@ function deserialize_drite_account_v1_AuthenticateUserRequest(buffer_arg) {
   return drite_account_v1_user_pb.AuthenticateUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_drite_account_v1_AuthenticateUserResponse(arg) {
-  if (!(arg instanceof drite_account_v1_user_pb.AuthenticateUserResponse)) {
-    throw new Error('Expected argument of type drite.account.v1.AuthenticateUserResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_drite_account_v1_AuthenticateUserResponse(buffer_arg) {
-  return drite_account_v1_user_pb.AuthenticateUserResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_drite_account_v1_AuthorizationRequest(arg) {
   if (!(arg instanceof drite_account_v1_authorization_pb.AuthorizationRequest)) {
     throw new Error('Expected argument of type drite.account.v1.AuthorizationRequest');
@@ -281,11 +270,11 @@ var AccountServiceService = exports.AccountServiceService = {
     requestStream: false,
     responseStream: false,
     requestType: drite_account_v1_user_pb.AuthenticateUserRequest,
-    responseType: drite_account_v1_user_pb.AuthenticateUserResponse,
+    responseType: drite_account_v1_token_pb.TokenResponse,
     requestSerialize: serialize_drite_account_v1_AuthenticateUserRequest,
     requestDeserialize: deserialize_drite_account_v1_AuthenticateUserRequest,
-    responseSerialize: serialize_drite_account_v1_AuthenticateUserResponse,
-    responseDeserialize: deserialize_drite_account_v1_AuthenticateUserResponse,
+    responseSerialize: serialize_drite_account_v1_TokenResponse,
+    responseDeserialize: deserialize_drite_account_v1_TokenResponse,
   },
   authorize: {
     path: '/drite.account.v1.AccountService/Authorize',

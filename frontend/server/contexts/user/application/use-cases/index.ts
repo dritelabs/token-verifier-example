@@ -1,9 +1,9 @@
 import { UserRepository } from "../../domain/repositories/user-repository";
 import { defineChangePassword } from "./change-password";
 import { defineGetUserProfile } from "./get-user-profile";
-import { defineLoginUser } from "./login-user";
+import { defineAuthenticate } from "./authenticate";
 import { defineLogoutUser } from "./logout-user";
-import { defineRegisterUser } from "./register-user";
+import { defineCreateUser } from "./create-user";
 import { defineResetPassword } from "./reset-password";
 import { defineUpdateUserProfile } from "./update-user-profile";
 
@@ -13,11 +13,11 @@ interface DefineUserUseCases {
 
 export function defineUserUseCases({ userRepository }: DefineUserUseCases) {
   return {
+    authenticate: defineAuthenticate({ userRepository }),
+    createUser: defineCreateUser({ userRepository }),
     changePassword: defineChangePassword({ userRepository }),
     getUserProfile: defineGetUserProfile({ userRepository }),
-    loginUser: defineLoginUser({ userRepository }),
     logoutUser: defineLogoutUser({ userRepository }),
-    registerUser: defineRegisterUser({ userRepository }),
     resetPassword: defineResetPassword({ userRepository }),
     updateUserProfile: defineUpdateUserProfile({ userRepository }),
   };

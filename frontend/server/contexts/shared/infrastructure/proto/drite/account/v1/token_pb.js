@@ -958,10 +958,11 @@ proto.drite.account.v1.TokenResponse.prototype.toObject = function(opt_includeIn
 proto.drite.account.v1.TokenResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     accessToken: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    tokenType: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    expiresIn: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    scope: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    refreshToken: jspb.Message.getFieldWithDefault(msg, 5, "")
+    expiresIn: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    idToken: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    refreshToken: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    scope: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    tokenType: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -1004,19 +1005,23 @@ proto.drite.account.v1.TokenResponse.deserializeBinaryFromReader = function(msg,
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setTokenType(value);
+      msg.setExpiresIn(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setExpiresIn(value);
+      msg.setIdToken(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setScope(value);
+      msg.setRefreshToken(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setRefreshToken(value);
+      msg.setScope(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTokenType(value);
       break;
     default:
       reader.skipField();
@@ -1054,31 +1059,38 @@ proto.drite.account.v1.TokenResponse.serializeBinaryToWriter = function(message,
       f
     );
   }
-  f = message.getTokenType();
+  f = message.getExpiresIn();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getExpiresIn();
+  f = message.getIdToken();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getScope();
+  f = message.getRefreshToken();
   if (f.length > 0) {
     writer.writeString(
       4,
       f
     );
   }
-  f = message.getRefreshToken();
+  f = message.getScope();
   if (f.length > 0) {
     writer.writeString(
       5,
+      f
+    );
+  }
+  f = message.getTokenType();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -1104,10 +1116,10 @@ proto.drite.account.v1.TokenResponse.prototype.setAccessToken = function(value) 
 
 
 /**
- * optional string token_type = 2;
+ * optional string expires_in = 2;
  * @return {string}
  */
-proto.drite.account.v1.TokenResponse.prototype.getTokenType = function() {
+proto.drite.account.v1.TokenResponse.prototype.getExpiresIn = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1116,16 +1128,16 @@ proto.drite.account.v1.TokenResponse.prototype.getTokenType = function() {
  * @param {string} value
  * @return {!proto.drite.account.v1.TokenResponse} returns this
  */
-proto.drite.account.v1.TokenResponse.prototype.setTokenType = function(value) {
+proto.drite.account.v1.TokenResponse.prototype.setExpiresIn = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional string expires_in = 3;
+ * optional string id_token = 3;
  * @return {string}
  */
-proto.drite.account.v1.TokenResponse.prototype.getExpiresIn = function() {
+proto.drite.account.v1.TokenResponse.prototype.getIdToken = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -1134,16 +1146,16 @@ proto.drite.account.v1.TokenResponse.prototype.getExpiresIn = function() {
  * @param {string} value
  * @return {!proto.drite.account.v1.TokenResponse} returns this
  */
-proto.drite.account.v1.TokenResponse.prototype.setExpiresIn = function(value) {
+proto.drite.account.v1.TokenResponse.prototype.setIdToken = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string scope = 4;
+ * optional string refresh_token = 4;
  * @return {string}
  */
-proto.drite.account.v1.TokenResponse.prototype.getScope = function() {
+proto.drite.account.v1.TokenResponse.prototype.getRefreshToken = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -1152,16 +1164,16 @@ proto.drite.account.v1.TokenResponse.prototype.getScope = function() {
  * @param {string} value
  * @return {!proto.drite.account.v1.TokenResponse} returns this
  */
-proto.drite.account.v1.TokenResponse.prototype.setScope = function(value) {
+proto.drite.account.v1.TokenResponse.prototype.setRefreshToken = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
 /**
- * optional string refresh_token = 5;
+ * optional string scope = 5;
  * @return {string}
  */
-proto.drite.account.v1.TokenResponse.prototype.getRefreshToken = function() {
+proto.drite.account.v1.TokenResponse.prototype.getScope = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -1170,8 +1182,26 @@ proto.drite.account.v1.TokenResponse.prototype.getRefreshToken = function() {
  * @param {string} value
  * @return {!proto.drite.account.v1.TokenResponse} returns this
  */
-proto.drite.account.v1.TokenResponse.prototype.setRefreshToken = function(value) {
+proto.drite.account.v1.TokenResponse.prototype.setScope = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string token_type = 6;
+ * @return {string}
+ */
+proto.drite.account.v1.TokenResponse.prototype.getTokenType = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.drite.account.v1.TokenResponse} returns this
+ */
+proto.drite.account.v1.TokenResponse.prototype.setTokenType = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 

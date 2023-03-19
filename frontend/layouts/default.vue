@@ -33,11 +33,8 @@
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
-
       <v-main>
-        <v-container fluid>
-          <slot />
-        </v-container>
+        <slot />
       </v-main>
     </v-app>
   </v-layout>
