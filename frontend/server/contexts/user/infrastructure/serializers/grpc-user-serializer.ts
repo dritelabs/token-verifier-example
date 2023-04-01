@@ -9,5 +9,12 @@ export function defineGRPCUserSerializer(): UserSerializer<UserMessage> {
         profile: {},
       };
     },
+    serializeToDataTransferObject(input) {
+      const message = new UserMessage();
+
+      message.setId(input.id!);
+
+      return message;
+    },
   };
 }

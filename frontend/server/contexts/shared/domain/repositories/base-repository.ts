@@ -1,7 +1,7 @@
-export interface BaseRepository<Entity, Context = any> {
-  save(input: Partial<Entity>, context?: Context): Promise<Entity>;
-  delete(id: string, context?: Context): void;
-  findOne(id: string, context?: Context): Promise<Entity>;
-  findAll(input: Partial<Entity>, context?: Context): Promise<Entity[]>;
-  update(input: Partial<Entity>, context?: Context): Promise<Entity>;
+export interface BaseRepository<Entity> {
+  save(input: Partial<Entity>): Promise<Entity>;
+  delete(id: string): void;
+  findById(id: string): Promise<Entity>;
+  findAll(input: Partial<Entity>): Promise<Entity[]>;
+  update(input: Partial<Entity>): Promise<Entity>;
 }

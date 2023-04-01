@@ -1,3 +1,4 @@
-export interface BaseSerializer<Input, Entity> {
-  serializeToEntity(input: Input): Entity;
+export interface BaseSerializer<Entity, DataTransferObject> {
+  serializeToEntity(input: DataTransferObject): Entity;
+  serializeToDataTransferObject(input: Entity): DataTransferObject;
 }

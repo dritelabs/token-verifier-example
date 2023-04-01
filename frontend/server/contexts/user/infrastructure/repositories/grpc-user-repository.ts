@@ -1,3 +1,4 @@
+import { H3Event } from "h3";
 import { ServerError } from "./../../../shared/infrastructure/errors/server-error";
 import { promisify } from "node:util";
 import { Metadata, ServiceError, status } from "@grpc/grpc-js";
@@ -22,14 +23,20 @@ interface DefineGRPCUserRepository {
   userSerializer: UserSerializer<UserMessage>;
 }
 
-export function defineGRPCUserRepository({
-  tokenSerializer,
-  userSerializer,
-}: DefineGRPCUserRepository): UserRepository {
+export function defineGRPCUserRepository(
+  { tokenSerializer, userSerializer }: DefineGRPCUserRepository,
+  context: H3Event
+): UserRepository {
   return {
     async save(input) {
       const request = new CreateUserRequest();
       const metadata = new Metadata();
+
+      request.setEmail(input.email?.value!);
+      request.setGivenName(input.profile?.givenName!);
+      request.setMiddleName(input.profile?.middleName!);
+      request.setPassword(input.password?.value!);
+
       const response = await createUser(request, metadata);
 
       return userSerializer.serializeToEntity(response);
@@ -37,6 +44,9 @@ export function defineGRPCUserRepository({
     async delete(input) {
       const request = new DeleteUserRequest();
       const metadata = new Metadata();
+
+      request.setId(input);
+
       await deleteUser(request, metadata);
 
       return;
@@ -44,6 +54,9 @@ export function defineGRPCUserRepository({
     async findOne(input) {
       const request = new GetUserRequest();
       const metadata = new Metadata();
+
+      request.setId(input);
+
       const response = await getUser(request, metadata);
 
       return userSerializer.serializeToEntity(response);
@@ -51,6 +64,12 @@ export function defineGRPCUserRepository({
     async findAll(input) {
       const request = new GetUserRequest();
       const metadata = new Metadata();
+
+      metadata.set(
+        "authorization",
+        context.context.session.user?.access_token!
+      );
+
       const response = await getUser(request, metadata);
 
       return [userSerializer.serializeToEntity(response)];

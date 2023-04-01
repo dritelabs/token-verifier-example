@@ -1,14 +1,13 @@
 import { OAuthError } from "./../../../../shared/infrastructure/errors/oauth-error";
 import { H3Event } from "h3";
-import { BadRequest } from "~~/server/contexts/shared/infrastructure/errors/bad-request";
-import { user } from "../../../container";
 
 export async function createUser(event: H3Event) {
-  return user.useCases.createUser({});
-}
-
-export async function getUserProfile(event: H3Event) {
-  return user.useCases.getUserProfile({ userId: "" });
+  return event.context.userService.create({
+    email: "",
+    givenName: "",
+    middleName: "",
+    password: "",
+  });
 }
 
 export async function login(event: H3Event) {
@@ -16,7 +15,7 @@ export async function login(event: H3Event) {
     const body = await readRawBody(event);
     const request = new URLSearchParams(body);
 
-    const response = await user.useCases.authenticate({
+    const response = await event.context.userService.authenticate({
       email: request.get("email")!,
       password: request.get("password")!,
     });
@@ -37,5 +36,5 @@ export async function login(event: H3Event) {
 }
 
 export async function logout(event: H3Event) {
-  await event.context.session.save();
+  await event.context.session.destroy();
 }
