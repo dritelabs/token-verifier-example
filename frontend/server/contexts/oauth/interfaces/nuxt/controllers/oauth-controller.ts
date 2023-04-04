@@ -12,7 +12,7 @@ function defineAuthorizeController({ oauthUseCases }: DefineOAuthController) {
   return async function authorize(event: H3Event) {
     try {
       const isGet = event.node.req.method?.toUpperCase() === "GET";
-      const isAuthorize = event.node.req.url?.includes("authorize");
+      const isAuthorize = event.node.req.url?.includes("111authorize");
 
       if (isGet && isAuthorize) {
         const query = getQuery(event);

@@ -5,7 +5,52 @@ definePageMeta({
 </script>
 
 <template>
-  <v-container fluid class="h-100">
+  <section
+    class="relative flex flex-wrap lg:h-screen lg:items-center bg-slate-100"
+  >
+    <div class="mx-auto max-w-lg">
+      <div class="card w-96 bg-base-100">
+        <form action="" class="mt-6 mb-0 space-y-4 p-4 sm:p-6 lg:p-8">
+          <picture class="flex justify-center">
+            <img src="/logo-black.svg" width="80" />
+          </picture>
+
+          <p class="text-center text-lg font-medium">Sign in to your account</p>
+
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">Email:</span>
+            </label>
+            <input
+              type="email"
+              placeholder="Enter email"
+              class="input input-bordered w-full"
+            />
+          </div>
+
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">Password:</span>
+            </label>
+            <input
+              type="Password"
+              placeholder="Enter password"
+              class="input input-bordered w-full"
+            />
+          </div>
+
+          <button class="btn btn-primary btn-block">Sign in</button>
+
+          <p class="text-center text-sm text-gray-500">
+            No account?
+            <a class="underline" href="">Sign up</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- <v-container fluid class="h-100">
     <v-row class="h-100" align="center" justify="center" no-gutters>
       <v-col cols="12">
         <v-card max-width="450" class="pt-12 px-10 pb-9 mx-auto">
@@ -45,5 +90,5 @@ definePageMeta({
         </v-card>
       </v-col>
     </v-row>
-  </v-container>
+  </v-container> -->
 </template>

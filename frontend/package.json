@@ -12,7 +12,6 @@
     "@bufbuild/protobuf": "^1.1.0",
     "@grpc/grpc-js": "^1.8.12",
     "@mdi/font": "^7.1.96",
-    "@types/bcrypt": "^5.0.0",
     "google-protobuf": "^3.21.2",
     "iron-session": "^6.3.1",
     "lodash": "^4.17.21",
@@ -20,9 +19,14 @@
     "vuetify": "^3.0.6"
   },
   "devDependencies": {
+    "@nuxtjs/color-mode": "^3.2.0",
+    "@nuxtjs/tailwindcss": "^6.6.5",
     "@sidebase/nuxt-auth": "^0.4.4",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.9",
     "@types/google-protobuf": "^3.15.6",
     "@types/lodash": "^4.14.191",
+    "daisyui": "^2.51.5",
     "grpc_tools_node_protoc_ts": "^5.3.3",
     "grpc-tools": "^1.12.4",
     "nuxt": "^3.3.1"
