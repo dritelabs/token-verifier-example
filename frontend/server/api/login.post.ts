@@ -1,3 +1,3 @@
-import { login } from "../contexts/user/interfaces/nuxt/controllers/user-controller";
-
-export default eventHandler(login);
+export default eventHandler((event) =>
+  event.context.userModule.resolve("userController").login(event)
+);

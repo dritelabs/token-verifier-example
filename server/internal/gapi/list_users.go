@@ -8,11 +8,18 @@ import (
 	"github.com/dritelabs/accounts/internal/serializer"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 )
 
 func (s *AccountServiceServer) ListUsers(ctx context.Context, req *pb.ListUsersRequest) (*pb.ListUsersResponse, error) {
-	log.Info().Msgf("fetching clients")
+	log.Info().Msgf("fetching users")
+
+	md, _ := metadata.FromIncomingContext(ctx)
+
+	token := md.Get("authorization")[0]
+
+	log.Info().Msgf("%s", token)
 
 	var users []models.User
 

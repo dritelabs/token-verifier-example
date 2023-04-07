@@ -9,24 +9,21 @@ import {
   CreateUserRequest,
   DeleteUserRequest,
   GetUserRequest,
+  ListUsersRequest,
+  ListUsersResponse,
   UpdateUserRequest,
   User as UserMessage,
 } from "~/server/contexts/shared/infrastructure/proto/drite/account/v1/user_pb";
 import { TokenResponse } from "~/server/contexts/shared/infrastructure/proto/drite/account/v1/token_pb";
 import { UserRepository } from "~/server/contexts/user/domain/repositories/user-repository";
-import { UserSerializer } from "~/server/contexts/user/domain/serializers/user-serializer";
-import { TokenSerializer } from "~/server/contexts/oauth/domain/serializers/token-serializer";
 import { BadRequest } from "~~/server/contexts/shared/infrastructure/errors/bad-request";
+import { DefineUserRepository } from "./types";
 
-interface DefineGRPCUserRepository {
-  tokenSerializer: TokenSerializer<TokenResponse>;
-  userSerializer: UserSerializer<UserMessage>;
-}
-
-export function defineGRPCUserRepository(
-  { tokenSerializer, userSerializer }: DefineGRPCUserRepository,
-  context: H3Event
-): UserRepository {
+export function defineUserRepository({
+  tokenSerializer,
+  userSerializer,
+  context,
+}: DefineUserRepository): UserRepository {
   return {
     async save(input) {
       const request = new CreateUserRequest();
@@ -47,37 +44,40 @@ export function defineGRPCUserRepository(
 
       request.setId(input);
 
+      metadata.set("authorization", context?.["access_token"]);
+
       await deleteUser(request, metadata);
 
       return;
     },
-    async findOne(input) {
+    async findById(input) {
       const request = new GetUserRequest();
       const metadata = new Metadata();
 
       request.setId(input);
+
+      metadata.set("authorization", context?.["access_token"]);
 
       const response = await getUser(request, metadata);
 
       return userSerializer.serializeToEntity(response);
     },
     async findAll(input) {
-      const request = new GetUserRequest();
+      const request = new ListUsersRequest();
       const metadata = new Metadata();
 
-      metadata.set(
-        "authorization",
-        context.context.session.user?.access_token!
-      );
+      metadata.set("authorization", context?.["access_token"]);
 
-      const response = await getUser(request, metadata);
+      const response = await listUsers(request, metadata);
 
-      return [userSerializer.serializeToEntity(response)];
+      return response.getUsersList().map(userSerializer.serializeToEntity);
     },
     async update(input) {
       const request = new UpdateUserRequest();
       const metadata = new Metadata();
       const response = await updateUser(request, metadata);
+
+      metadata.set("authorization", context?.["access_token"]);
 
       return userSerializer.serializeToEntity(response);
     },
@@ -122,6 +122,10 @@ const deleteUser = promisify<DeleteUserRequest, Metadata, Empty>(
 
 const getUser = promisify<GetUserRequest, Metadata, UserMessage>(
   accountClient.getUser.bind(accountClient)
+);
+
+const listUsers = promisify<ListUsersRequest, Metadata, ListUsersResponse>(
+  accountClient.listUsers.bind(accountClient)
 );
 
 const updateUser = promisify<UpdateUserRequest, Metadata, UserMessage>(

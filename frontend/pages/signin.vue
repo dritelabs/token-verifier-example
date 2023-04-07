@@ -10,7 +10,11 @@ definePageMeta({
   >
     <div class="mx-auto max-w-lg">
       <div class="card w-96 bg-base-100">
-        <form action="" class="mt-6 mb-0 space-y-4 p-4 sm:p-6 lg:p-8">
+        <form
+          method="POST"
+          action="/api/login"
+          class="mt-6 mb-0 space-y-4 p-4 sm:p-6 lg:p-8"
+        >
           <picture class="flex justify-center">
             <img src="/logo-black.svg" width="80" />
           </picture>
@@ -23,6 +27,7 @@ definePageMeta({
             </label>
             <input
               type="email"
+              name="email"
               placeholder="Enter email"
               class="input input-bordered w-full"
             />
@@ -34,6 +39,7 @@ definePageMeta({
             </label>
             <input
               type="Password"
+              name="password"
               placeholder="Enter password"
               class="input input-bordered w-full"
             />

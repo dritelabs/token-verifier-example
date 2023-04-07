@@ -1,7 +1,5 @@
-import { defineUserContainer } from "../contexts/user/interfaces/nuxt/define-container";
+import { container } from "../contexts/user/index";
 
 export default defineEventHandler((event) => {
-  const { userService } = defineUserContainer(event);
-
-  event.context.userService = userService;
+  event.context.userService = container;
 });
