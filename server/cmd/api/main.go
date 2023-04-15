@@ -11,6 +11,7 @@ import (
 	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/dritelabs/accounts/internal/repository"
 	"github.com/dritelabs/accounts/internal/token"
+	"github.com/dritelabs/accounts/internal/user"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -53,6 +54,10 @@ func main() {
 		TokenMaker: tokenMaker,
 	})
 
+	userModule := user.NewUserModule(&user.UserModuleConfig{
+		Store: *store,
+	})
+
 	if conf.Environment == "development" {
 		if err := database.AutoMigrate(store); err != nil {
 			log.Fatal().Err(err).Msg("Failed to connect database")
@@ -66,6 +71,7 @@ func main() {
 		PrivateKey:     privateKey,
 		TokenMaker:     tokenMaker,
 		UserRepository: userRepository,
+		UserModule:     userModule,
 	}
 
 	grpcLogger := grpc.UnaryInterceptor(logger.GrpcLogger)

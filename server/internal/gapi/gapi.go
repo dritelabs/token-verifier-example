@@ -5,6 +5,7 @@ import (
 	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/dritelabs/accounts/internal/repository"
 	"github.com/dritelabs/accounts/internal/token"
+	"github.com/dritelabs/accounts/internal/user"
 	"gorm.io/gorm"
 )
 
@@ -16,6 +17,7 @@ type AccountServiceServer struct {
 	privateKey     string
 	tokenMaker     *token.TokenMaker
 	userRepository *repository.UserRepository
+	userModule     *user.UserModule
 }
 
 type AccountServiceServerConfig struct {
@@ -25,6 +27,7 @@ type AccountServiceServerConfig struct {
 	PrivateKey     string
 	TokenMaker     *token.TokenMaker
 	UserRepository *repository.UserRepository
+	UserModule     *user.UserModule
 }
 
 func NewServer(c *AccountServiceServerConfig) *AccountServiceServer {
@@ -35,5 +38,6 @@ func NewServer(c *AccountServiceServerConfig) *AccountServiceServer {
 		privateKey:     c.PrivateKey,
 		tokenMaker:     c.TokenMaker,
 		userRepository: c.UserRepository,
+		userModule:     c.UserModule,
 	}
 }
