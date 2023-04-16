@@ -1,7 +1,7 @@
 package user
 
 import (
-	usecases "github.com/dritelabs/accounts/internal/user/application/use_cases"
+	"github.com/dritelabs/accounts/internal/user/application/commands"
 	"github.com/dritelabs/accounts/internal/user/infrastructure/mappers"
 	"github.com/dritelabs/accounts/internal/user/infrastructure/repositories"
 	"gorm.io/gorm"
@@ -12,22 +12,20 @@ type UserModuleConfig struct {
 }
 
 type UserModule struct {
-	UseCases *usecases.UserService
+	Commands commands.Commands
 }
 
 func NewUserModule(c *UserModuleConfig) *UserModule {
-	mapper := mappers.NewGORMUserMapper()
+	userMapper := mappers.NewGORMUserMapper()
 
-	repository := repositories.NewGORMUserRepository(&repositories.GORMUserRepositoryConfig{
-		Mapper: mapper,
+	userRepository := repositories.NewGORMUserRepository(&repositories.GORMUserRepositoryConfig{
+		Mapper: userMapper,
 		Store:  c.Store,
 	})
 
-	service := usecases.NewUserService(usecases.NewUserServiceConfig{
-		UserRepository: repository,
-	})
-
 	return &UserModule{
-		UseCases: service,
+		Commands: commands.Commands{
+			CreateUser: commands.NewCreateUserHandler(userRepository),
+		},
 	}
 }

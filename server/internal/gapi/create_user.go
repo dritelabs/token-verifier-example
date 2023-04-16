@@ -9,7 +9,7 @@ import (
 	"github.com/dritelabs/accounts/internal/models"
 	pb "github.com/dritelabs/accounts/internal/proto/drite/account/v1"
 	"github.com/dritelabs/accounts/internal/serializer"
-	usecases "github.com/dritelabs/accounts/internal/user/application/use_cases"
+	"github.com/dritelabs/accounts/internal/user/application/commands"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -24,7 +24,14 @@ func (s *AccountServiceServer) CreateUser(ctx context.Context, req *pb.CreateUse
 		return nil, status.Errorf(codes.Internal, "failed to hash password: %s", err)
 	}
 
-	s.userModule.UseCases.CreateUser(ctx, usecases.CreateUserDTO{})
+	err = s.userModule.Commands.CreateUser.Handle(ctx, commands.CreateUserCommand{
+		Email:      req.GetEmail(),
+		GivenName:  req.GetGivenName(),
+		MiddleName: req.GetMiddleName(),
+		Password:   req.GetPassword(),
+	})
+
+	// s.userModule.UseCases.CreateUser(ctx, usecases.CreateUserDTO{})
 
 	u := models.User{
 		Email:    sql.NullString{Valid: true, String: req.GetEmail()},

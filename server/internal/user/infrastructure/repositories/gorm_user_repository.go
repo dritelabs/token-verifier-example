@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"fmt"
 	"strings"
@@ -62,7 +63,14 @@ func (r *GORMUserRepository) FindAll(ctx context.Context) ([]*entities.User, err
 }
 
 func (r *GORMUserRepository) Save(ctx context.Context, u *entities.User) (*entities.User, error) {
-	e := r.Mapper.ToEntity(ctx, u)
+	e := models.User{
+		Email:    sql.NullString{Valid: true, String: req.GetEmail()},
+		Password: hash,
+		Profile: &models.Profile{
+			GivenName:  sql.NullString{Valid: true, String: req.GetGivenName()},
+			MiddleName: sql.NullString{Valid: true, String: req.GetMiddleName()},
+		},
+	}
 
 	if err := r.Store.Create(&e).Error; err != nil {
 		log.Error().Msgf("failed to create eser: %s", err)

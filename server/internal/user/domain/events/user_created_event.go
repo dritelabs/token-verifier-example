@@ -14,7 +14,7 @@ func (e *UserCreatedEvent) CreateAt() time.Time {
 	return time.Now()
 }
 
-func (e *UserCreatedEvent) Identity() string {
+func (e *UserCreatedEvent) String() string {
 	return "UserCreated"
 }
 

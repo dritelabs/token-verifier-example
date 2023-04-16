@@ -24,28 +24,23 @@ type User struct {
 	Password            *valueobjects.Password
 	PhoneNumber         *valueobjects.PhoneNumber
 	PhoneNumberVerified bool
-	Profile             Profile
+	Profile             *Profile
 	Username            *valueobjects.Username
 	UpdatedAt           time.Time
 }
 
-func NewUser() (*User, error) {
-	email, err := valueobjects.NewEmail("")
+func NewUser(
+	Email,
+	GivenName,
+	MiddleName,
+	Password string,
+) (*User, error) {
+	email, err := valueobjects.NewEmail(Email)
 	if err != nil {
 		return nil, err
 	}
 
-	password, err := valueobjects.NewPassword("")
-	if err != nil {
-		return nil, err
-	}
-
-	phoneNumber, err := valueobjects.NewPhoneNumber("")
-	if err != nil {
-		return nil, err
-	}
-
-	username, err := valueobjects.NewUsername("")
+	password, err := valueobjects.NewPassword(Password)
 	if err != nil {
 		return nil, err
 	}
@@ -53,17 +48,21 @@ func NewUser() (*User, error) {
 	u := &User{
 		Blocked:             false,
 		Email:               email,
-		EmailVerified:       true,
+		EmailVerified:       false,
 		LastIp:              "127.0.0.1",
 		LastLogin:           time.Now(),
 		LastPasswordReset:   time.Now(),
 		LoginsCount:         0,
 		Password:            password,
-		PhoneNumber:         phoneNumber,
-		PhoneNumberVerified: true,
-		Username:            username,
-		CreatedAt:           time.Now(),
-		UpdatedAt:           time.Now(),
+		PhoneNumber:         &valueobjects.PhoneNumber{},
+		PhoneNumberVerified: false,
+		Profile: &Profile{
+			GivenName:  GivenName,
+			MiddleName: MiddleName,
+		},
+		Username:  &valueobjects.Username{},
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 
 	u.AddEvent(events.NewUserCreatedEvent(u.ID))
