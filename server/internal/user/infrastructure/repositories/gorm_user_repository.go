@@ -64,8 +64,8 @@ func (r *GORMUserRepository) FindAll(ctx context.Context) ([]*entities.User, err
 
 func (r *GORMUserRepository) Save(ctx context.Context, u *entities.User) (*entities.User, error) {
 	e := &models.User{
-		Email:    sql.NullString{Valid: true, String: u.Email.ToString()},
-		Password: u.Password.ToString(),
+		Email:    sql.NullString{Valid: true, String: u.Email.String()},
+		Password: u.Password.String(),
 		Profile: &models.Profile{
 			GivenName:  sql.NullString{Valid: true, String: u.Profile.GivenName},
 			MiddleName: sql.NullString{Valid: true, String: u.Profile.MiddleName},

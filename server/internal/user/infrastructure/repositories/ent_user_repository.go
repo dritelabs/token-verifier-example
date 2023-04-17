@@ -52,8 +52,8 @@ func (r *ENTUserRepository) FindAll(ctx context.Context, id string) ([]*entities
 
 func (r *ENTUserRepository) Save(ctx context.Context, u *entities.User) (*entities.User, error) {
 	eu, err := r.store.User.Create().
-		SetEmail(u.Email.ToString()).
-		SetPassword(u.Password.ToString()).
+		SetEmail(u.Email.String()).
+		SetPassword(u.Password.String()).
 		Save(ctx)
 
 	if err != nil {

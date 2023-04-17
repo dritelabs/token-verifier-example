@@ -2,22 +2,25 @@ package valueobjects
 
 import "errors"
 
-type PhoneNumber struct {
-	value string
+var (
+	ErrInvalidPhoneNumber = errors.New("invalid phone number")
+)
+
+type PhoneNumber string
+
+func (ov PhoneNumber) String() string {
+	return string(ov)
 }
 
-func (e PhoneNumber) ToString() string {
-	return e.value
-}
-
-func validatePhoneNumber(e string) error {
+func ValidatePhoneNumber(ov PhoneNumber) error {
 	return nil
+	// return ErrInvalidPhoneNumber
 }
 
-func NewPhoneNumber(e string) (*PhoneNumber, error) {
-	if err := validatePhoneNumber(e); err != nil {
-		return nil, errors.New("invalid PhoneNumber")
+func NewPhoneNumber(ov PhoneNumber) (*PhoneNumber, error) {
+	if err := ValidatePhoneNumber(ov); err != nil {
+		return nil, err
 	}
 
-	return &PhoneNumber{value: e}, nil
+	return &ov, nil
 }

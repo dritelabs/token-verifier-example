@@ -23,18 +23,17 @@ type CreateUserHandler struct {
 }
 
 func (h *CreateUserHandler) Handle(ctx context.Context, cmd CreateUserCommand) error {
-	usr, err := entities.NewUser(
-		cmd.Email,
-		cmd.GivenName,
-		cmd.MiddleName,
-		cmd.Password,
-	)
+	usr, err := entities.NewUser(&entities.NewUserConfig{})
 
 	if err != nil {
 		return err
 	}
 
 	h.userRepository.Save(ctx, usr)
+
+	// for _, e := range usr.DomainEvents() {
+
+	// }
 
 	return nil
 }

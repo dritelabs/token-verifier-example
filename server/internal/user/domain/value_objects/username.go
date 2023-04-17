@@ -2,22 +2,25 @@ package valueobjects
 
 import "errors"
 
-type Username struct {
-	value string
+var (
+	ErrInvalidUsername = errors.New("invalid username")
+)
+
+type Username string
+
+func (ov Username) String() string {
+	return string(ov)
 }
 
-func (e Username) ToString() string {
-	return e.value
-}
-
-func validateUsername(e string) error {
+func ValidateUsername(ov Username) error {
 	return nil
+	// return fmt.Errorf("invalid username field: %q", ov)
 }
 
-func NewUsername(e string) (*Username, error) {
-	if err := validateUsername(e); err != nil {
-		return nil, errors.New("invalid Username")
+func NewUsername(ov Username) (*Username, error) {
+	if err := ValidateUsername(ov); err != nil {
+		return nil, err
 	}
 
-	return &Username{value: e}, nil
+	return &ov, nil
 }

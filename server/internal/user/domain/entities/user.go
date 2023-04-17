@@ -14,53 +14,72 @@ type User struct {
 	CreatedAt time.Time
 	// Clients []Clients
 	// ClientsApproval []ClientsApproval
-	Email               *valueobjects.Email
+	Email               valueobjects.Email
 	EmailVerified       bool
 	ID                  string
 	LastIp              string
-	LastLogin           time.Time
-	LastPasswordReset   time.Time
-	LoginsCount         int32
-	Password            *valueobjects.Password
-	PhoneNumber         *valueobjects.PhoneNumber
+	LastLogin           *time.Time
+	LastPasswordReset   *time.Time
+	LoginsCount         *int32
+	Password            valueobjects.Password
+	PhoneNumber         valueobjects.PhoneNumber
 	PhoneNumberVerified bool
 	Profile             *Profile
-	Username            *valueobjects.Username
+	Username            valueobjects.Username
 	UpdatedAt           time.Time
 }
 
-func NewUser(
-	Email,
-	GivenName,
-	MiddleName,
-	Password string,
-) (*User, error) {
-	email, err := valueobjects.NewEmail(Email)
+type NewUserConfig struct {
+	Blocked             bool
+	CreatedAt           time.Time
+	Email               string
+	EmailVerified       bool
+	ID                  string
+	LastIp              string
+	LastLogin           *time.Time
+	LastPasswordReset   *time.Time
+	LoginsCount         *int32
+	Password            string
+	PhoneNumber         string
+	PhoneNumberVerified bool
+	// Profile             *Profile
+	Username  string
+	UpdatedAt time.Time
+}
+
+func NewUser(c *NewUserConfig) (*User, error) {
+	email, err := valueobjects.NewEmail(valueobjects.Email(c.Email))
 	if err != nil {
 		return nil, err
 	}
 
-	password, err := valueobjects.NewPassword(Password)
+	password, err := valueobjects.NewPassword(valueobjects.Password(c.Password))
+	if err != nil {
+		return nil, err
+	}
+
+	username, err := valueobjects.NewUsername(valueobjects.Username(c.Username))
 	if err != nil {
 		return nil, err
 	}
 
 	u := &User{
 		Blocked:             false,
-		Email:               email,
+		Email:               *email,
 		EmailVerified:       false,
-		LastIp:              "127.0.0.1",
-		LastLogin:           time.Now(),
-		LastPasswordReset:   time.Now(),
-		LoginsCount:         0,
-		Password:            password,
-		PhoneNumber:         &valueobjects.PhoneNumber{},
+		ID:                  c.ID,
+		LastIp:              "",
+		LastLogin:           nil,
+		LastPasswordReset:   nil,
+		LoginsCount:         nil,
+		Password:            *password,
+		PhoneNumber:         "",
 		PhoneNumberVerified: false,
-		Profile: &Profile{
-			GivenName:  GivenName,
-			MiddleName: MiddleName,
-		},
-		Username:  &valueobjects.Username{},
+		// Profile: &Profile{
+		// 	GivenName:  GivenName,
+		// 	MiddleName: MiddleName,
+		// },
+		Username:  *username,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}

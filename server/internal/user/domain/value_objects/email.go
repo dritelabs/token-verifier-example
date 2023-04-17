@@ -2,22 +2,25 @@ package valueobjects
 
 import "errors"
 
-type Email struct {
-	value string
+var (
+	ErrInvalidEmail = errors.New("invalid email")
+)
+
+type Email string
+
+func (ov Email) String() string {
+	return string(ov)
 }
 
-func (e Email) ToString() string {
-	return e.value
-}
-
-func validateEmail(e string) error {
+func ValidateEmail(ov Email) error {
 	return nil
+	// return ErrInvalidEmail
 }
 
-func NewEmail(e string) (*Email, error) {
-	if err := validateEmail(e); err != nil {
-		return nil, errors.New("invalid email")
+func NewEmail(ov Email) (*Email, error) {
+	if err := ValidateEmail(ov); err != nil {
+		return nil, err
 	}
 
-	return &Email{value: e}, nil
+	return &ov, nil
 }

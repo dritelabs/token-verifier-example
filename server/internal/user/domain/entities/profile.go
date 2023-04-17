@@ -9,7 +9,7 @@ import (
 type Profile struct {
 	// ID         string
 	// 	UserId     string
-	Birthdate  time.Time
+	BirthDate  time.Time
 	Gender     *valueobjects.Gender
 	Locale     string
 	GivenName  string
@@ -18,19 +18,20 @@ type Profile struct {
 	Profile    string
 	Picture    string
 	Website    string
-	Zoneinfo   string
+	ZoneInfo   string
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
 
 func NewProfile() (*Profile, error) {
-	gender, err := valueobjects.NewGender("")
+	gender, err := valueobjects.NewGender(valueobjects.GenderMale)
+
 	if err != nil {
 		return nil, err
 	}
 
 	return &Profile{
-		Birthdate:  time.Now(),
+		BirthDate:  time.Now(),
 		Gender:     gender,
 		Locale:     "",
 		GivenName:  "",
@@ -39,7 +40,7 @@ func NewProfile() (*Profile, error) {
 		Profile:    "",
 		Picture:    "",
 		Website:    "",
-		Zoneinfo:   "",
+		ZoneInfo:   "",
 		CreatedAt:  time.Now(),
 		UpdatedAt:  time.Now(),
 	}, nil

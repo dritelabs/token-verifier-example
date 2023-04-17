@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/profile"
 	"github.com/dritelabs/accounts/internal/user/domain/entities"
-	"github.com/dritelabs/accounts/internal/user/domain/mappers"
 )
 
 type ENTUserMapper struct{}
@@ -15,20 +15,24 @@ func (m *ENTUserMapper) ToDomain(ctx context.Context, u *ent.User) *entities.Use
 }
 
 func (m *ENTUserMapper) ToEntity(ctx context.Context, u *entities.User) *ent.User {
-	return &ent.User{}
-	// Email:    sql.NullString{Valid: true, String: req.GetEmail()},
-	// Password: hash,
-	// Profile: &models.Profile{
-	// 	GivenName:  sql.NullString{Valid: true, String: req.GetGivenName()},
-	// 	MiddleName: sql.NullString{Valid: true, String: req.GetMiddleName()},
-	// },
-	// }
-}
+	var gender profile.Gender
 
-// func (m *ENTUserMapper) ToDTO(u entities.User) *entities.User {
-// 	return &entities.User{}
-// }
-
-func NewENTUserMapper() mappers.UserMapper[ent.User] {
-	return &ENTUserMapper{}
+	return &ent.User{
+		ID:                       u.ID,
+		DefaultShippingAddressID: "",
+		DefaultBillingAddressID:  "",
+		Email:                    u.Email.String(),
+		EmailVerified:            u.EmailVerified,
+		Password:                 u.Password.String(),
+		PhoneNumber:              u.PhoneNumber.String(),
+		PhoneNumberVerified:      u.PhoneNumberVerified,
+		Username:                 u.Username.String(),
+		Edges: ent.UserEdges{
+			Profile: &ent.Profile{
+				BirthDate: &u.Profile.BirthDate,
+				GivenName: u.Profile.GivenName,
+				Gender:    gender,
+			},
+		},
+	}
 }

@@ -1,27 +1,39 @@
 package valueobjects
 
-import "errors"
+import (
+	"errors"
+)
 
-type Gender struct {
-	value string
+var (
+	ErrInvalidGender = errors.New("invalid enum value for gender")
+)
+
+type Gender string
+
+const (
+	GenderUnspecified Gender = "unspecified"
+	GenderMale        Gender = "male"
+	GenderFemale      Gender = "female"
+)
+
+func (ov Gender) String() string {
+	return string(ov)
 }
 
-func (g Gender) ToString() string {
-	return g.value
-}
-
-func validateGender(str string) error {
-	if str != "male" || str != "female" || str != "unspecified" {
-		return errors.New("Invalid gender")
+// ValidateGender is a validator for the "gender" field enum values. It is called by the builders before save.
+func ValidateGender(ov Gender) error {
+	switch ov {
+	case GenderUnspecified, GenderMale, GenderFemale:
+		return nil
+	default:
+		return ErrInvalidGender
 	}
-
-	return nil
 }
 
-func NewGender(str string) (*Gender, error) {
-	if err := validateGender(str); err != nil {
+func NewGender(ov Gender) (*Gender, error) {
+	if err := ValidateGender(ov); err != nil {
 		return nil, err
 	}
 
-	return &Gender{value: str}, nil
+	return &ov, nil
 }

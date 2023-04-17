@@ -2,22 +2,25 @@ package valueobjects
 
 import "errors"
 
-type Password struct {
-	value string
+var (
+	ErrInvalidPassword = errors.New("invalid password")
+)
+
+type Password string
+
+func (ov Password) String() string {
+	return string(ov)
 }
 
-func (e Password) ToString() string {
-	return e.value
-}
-
-func validatePassword(e string) error {
+func ValidatePassword(ov Password) error {
 	return nil
+	// return ErrInvalidPassword
 }
 
-func NewPassword(e string) (*Password, error) {
-	if err := validatePassword(e); err != nil {
-		return nil, errors.New("invalid Password")
+func NewPassword(ov Password) (*Password, error) {
+	if err := ValidatePassword(ov); err != nil {
+		return nil, err
 	}
 
-	return &Password{value: e}, nil
+	return &ov, nil
 }
