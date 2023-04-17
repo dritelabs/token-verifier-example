@@ -5,12 +5,12 @@ package enttest
 import (
 	"context"
 
-	"github.com/dritelabs/accounts/internal/shared/infrastructure/db/ent"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent"
 	// required by schema hooks.
-	_ "github.com/dritelabs/accounts/internal/shared/infrastructure/db/ent/runtime"
+	_ "github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"github.com/dritelabs/accounts/internal/shared/infrastructure/db/ent/migrate"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/migrate"
 )
 
 type (

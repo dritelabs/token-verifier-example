@@ -16,7 +16,7 @@ import (
 )
 
 type GORMUserRepositoryConfig struct {
-	Mapper mappers.UserMapper
+	Mapper mappers.UserMapper[models.User]
 	Store  gorm.DB
 }
 
@@ -63,12 +63,12 @@ func (r *GORMUserRepository) FindAll(ctx context.Context) ([]*entities.User, err
 }
 
 func (r *GORMUserRepository) Save(ctx context.Context, u *entities.User) (*entities.User, error) {
-	e := models.User{
-		Email:    sql.NullString{Valid: true, String: req.GetEmail()},
-		Password: hash,
+	e := &models.User{
+		Email:    sql.NullString{Valid: true, String: u.Email.ToString()},
+		Password: u.Password.ToString(),
 		Profile: &models.Profile{
-			GivenName:  sql.NullString{Valid: true, String: req.GetGivenName()},
-			MiddleName: sql.NullString{Valid: true, String: req.GetMiddleName()},
+			GivenName:  sql.NullString{Valid: true, String: u.Profile.GivenName},
+			MiddleName: sql.NullString{Valid: true, String: u.Profile.MiddleName},
 		},
 	}
 

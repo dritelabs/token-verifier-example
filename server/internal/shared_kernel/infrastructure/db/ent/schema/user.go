@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 )
@@ -14,6 +15,10 @@ type User struct {
 // Fields of the User.
 func (User) Fields() []ent.Field {
 	return []ent.Field{
+		field.String("id").
+			NotEmpty().
+			Unique().
+			Immutable(),
 		field.String("default_shipping_address_id"),
 		field.String("default_billing_address_id"),
 		field.String("email"),
@@ -27,7 +32,10 @@ func (User) Fields() []ent.Field {
 
 // Edges of the User.
 func (User) Edges() []ent.Edge {
-	return nil
+	return []ent.Edge{
+		edge.To("profile", Profile.Type).
+			Unique(),
+	}
 }
 
 func (User) Indexes() []ent.Index {

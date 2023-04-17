@@ -4,12 +4,13 @@ import (
 	"context"
 	"log"
 
-	"github.com/dritelabs/accounts/internal/shared/infrastructure/db/ent"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type Database struct{}
 
-func NewDatabase() *ent.Client {
+func (d *Database) Open() *ent.Client {
 	client, err := ent.Open("sqlite3", "file:ent?mode=memory&cache=shared&_fk=1")
 
 	if err != nil {

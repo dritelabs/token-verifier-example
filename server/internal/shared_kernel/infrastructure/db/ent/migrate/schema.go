@@ -8,9 +8,38 @@ import (
 )
 
 var (
+	// ProfilesColumns holds the columns for the "profiles" table.
+	ProfilesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "birth_date", Type: field.TypeTime},
+		{Name: "given_name", Type: field.TypeString},
+		{Name: "gender", Type: field.TypeEnum, Enums: []string{"unspecified", "male", "female"}},
+		{Name: "locale", Type: field.TypeString},
+		{Name: "middle_name", Type: field.TypeString},
+		{Name: "nickname", Type: field.TypeString},
+		{Name: "profile", Type: field.TypeString},
+		{Name: "picture", Type: field.TypeString},
+		{Name: "website", Type: field.TypeString},
+		{Name: "zone_info", Type: field.TypeString},
+		{Name: "user_profile", Type: field.TypeString, Unique: true},
+	}
+	// ProfilesTable holds the schema information for the "profiles" table.
+	ProfilesTable = &schema.Table{
+		Name:       "profiles",
+		Columns:    ProfilesColumns,
+		PrimaryKey: []*schema.Column{ProfilesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "profiles_users_profile",
+				Columns:    []*schema.Column{ProfilesColumns[11]},
+				RefColumns: []*schema.Column{UsersColumns[0]},
+				OnDelete:   schema.NoAction,
+			},
+		},
+	}
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeString, Unique: true},
 		{Name: "default_shipping_address_id", Type: field.TypeString},
 		{Name: "default_billing_address_id", Type: field.TypeString},
 		{Name: "email", Type: field.TypeString},
@@ -40,9 +69,11 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		ProfilesTable,
 		UsersTable,
 	}
 )
 
 func init() {
+	ProfilesTable.ForeignKeys[0].RefTable = UsersTable
 }

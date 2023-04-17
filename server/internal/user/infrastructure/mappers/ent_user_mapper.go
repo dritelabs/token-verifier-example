@@ -3,19 +3,19 @@ package mappers
 import (
 	"context"
 
-	"github.com/dritelabs/accounts/internal/models"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent"
 	"github.com/dritelabs/accounts/internal/user/domain/entities"
 	"github.com/dritelabs/accounts/internal/user/domain/mappers"
 )
 
-type GORMUserMapper struct{}
+type ENTUserMapper struct{}
 
-func (m *GORMUserMapper) ToDomain(ctx context.Context, u *models.User) *entities.User {
+func (m *ENTUserMapper) ToDomain(ctx context.Context, u *ent.User) *entities.User {
 	return &entities.User{}
 }
 
-func (m *GORMUserMapper) ToEntity(ctx context.Context, u *entities.User) *models.User {
-	return &models.User{}
+func (m *ENTUserMapper) ToEntity(ctx context.Context, u *entities.User) *ent.User {
+	return &ent.User{}
 	// Email:    sql.NullString{Valid: true, String: req.GetEmail()},
 	// Password: hash,
 	// Profile: &models.Profile{
@@ -25,10 +25,10 @@ func (m *GORMUserMapper) ToEntity(ctx context.Context, u *entities.User) *models
 	// }
 }
 
-// func (m *GORMUserMapper) ToDTO(u entities.User) *entities.User {
+// func (m *ENTUserMapper) ToDTO(u entities.User) *entities.User {
 // 	return &entities.User{}
 // }
 
-func NewGORMUserMapper() mappers.UserMapper[models.User] {
-	return &GORMUserMapper{}
+func NewENTUserMapper() mappers.UserMapper[ent.User] {
+	return &ENTUserMapper{}
 }

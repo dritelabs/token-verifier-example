@@ -8,14 +8,15 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/dritelabs/accounts/internal/shared/infrastructure/db/ent/user"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/profile"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/user"
 )
 
 // User is the model entity for the User schema.
 type User struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID string `json:"id,omitempty"`
 	// DefaultShippingAddressID holds the value of the "default_shipping_address_id" field.
 	DefaultShippingAddressID string `json:"default_shipping_address_id,omitempty"`
 	// DefaultBillingAddressID holds the value of the "default_billing_address_id" field.
@@ -31,8 +32,33 @@ type User struct {
 	// PhoneNumberVerified holds the value of the "phone_number_verified" field.
 	PhoneNumberVerified bool `json:"phone_number_verified,omitempty"`
 	// Username holds the value of the "username" field.
-	Username     string `json:"username,omitempty"`
+	Username string `json:"username,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the UserQuery when eager-loading is set.
+	Edges        UserEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// UserEdges holds the relations/edges for other nodes in the graph.
+type UserEdges struct {
+	// Profile holds the value of the profile edge.
+	Profile *Profile `json:"profile,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// ProfileOrErr returns the Profile value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e UserEdges) ProfileOrErr() (*Profile, error) {
+	if e.loadedTypes[0] {
+		if e.Profile == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: profile.Label}
+		}
+		return e.Profile, nil
+	}
+	return nil, &NotLoadedError{edge: "profile"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -42,9 +68,7 @@ func (*User) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case user.FieldEmailVerified, user.FieldPhoneNumberVerified:
 			values[i] = new(sql.NullBool)
-		case user.FieldID:
-			values[i] = new(sql.NullInt64)
-		case user.FieldDefaultShippingAddressID, user.FieldDefaultBillingAddressID, user.FieldEmail, user.FieldPassword, user.FieldPhoneNumber, user.FieldUsername:
+		case user.FieldID, user.FieldDefaultShippingAddressID, user.FieldDefaultBillingAddressID, user.FieldEmail, user.FieldPassword, user.FieldPhoneNumber, user.FieldUsername:
 			values[i] = new(sql.NullString)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -62,11 +86,11 @@ func (u *User) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case user.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value.Valid {
+				u.ID = value.String
 			}
-			u.ID = int(value.Int64)
 		case user.FieldDefaultShippingAddressID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field default_shipping_address_id", values[i])
@@ -126,6 +150,11 @@ func (u *User) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (u *User) Value(name string) (ent.Value, error) {
 	return u.selectValues.Get(name)
+}
+
+// QueryProfile queries the "profile" edge of the User entity.
+func (u *User) QueryProfile() *ProfileQuery {
+	return NewUserClient(u.config).QueryProfile(u)
 }
 
 // Update returns a builder for updating this User.

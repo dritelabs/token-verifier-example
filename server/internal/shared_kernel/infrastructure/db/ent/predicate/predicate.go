@@ -6,5 +6,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
+// Profile is the predicate function for profile builders.
+type Profile func(*sql.Selector)
+
 // User is the predicate function for user builders.
 type User func(*sql.Selector)

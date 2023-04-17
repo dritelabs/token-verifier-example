@@ -12,7 +12,8 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/dritelabs/accounts/internal/shared/infrastructure/db/ent/user"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/profile"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/user"
 )
 
 // ent aliases to avoid import conflicts in user's code.
@@ -73,7 +74,8 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			user.Table: user.ValidColumn,
+			profile.Table: profile.ValidColumn,
+			user.Table:    user.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

@@ -8,8 +8,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/dritelabs/accounts/internal/shared/infrastructure/db/ent/predicate"
-	"github.com/dritelabs/accounts/internal/shared/infrastructure/db/ent/user"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/predicate"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/user"
 )
 
 // UserDelete is the builder for deleting a User entity.
@@ -40,7 +40,7 @@ func (ud *UserDelete) ExecX(ctx context.Context) int {
 }
 
 func (ud *UserDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := sqlgraph.NewDeleteSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewDeleteSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeString))
 	if ps := ud.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

@@ -2,8 +2,19 @@
 
 package ent
 
+import (
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/schema"
+	"github.com/dritelabs/accounts/internal/shared_kernel/infrastructure/db/ent/user"
+)
+
 // The init function reads all schema descriptors with runtime code
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	userFields := schema.User{}.Fields()
+	_ = userFields
+	// userDescID is the schema descriptor for id field.
+	userDescID := userFields[0].Descriptor()
+	// user.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	user.IDValidator = userDescID.Validators[0].(func(string) error)
 }
